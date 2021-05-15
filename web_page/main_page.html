@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stok Ekranı</title>
+    <meta charset="UTF-8">
+    <link href="css/main-admin.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="css/menu_style.css">
+    <link rel="stylesheet" type="text/css" href="css/menu_style_default.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <script src="script.js"></script>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/datepicker/moment.min.js"></script>
+    <script src="vendor/datepicker/daterangepicker.js"></script>
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+</head>
+<body>
+
+<!--MENU-->
+<div id='cssmenu'>
+    <ul>
+        <li id="n1" onclick="open_tag_1()"><a href='#'>Kullanıcı İşlem</a></li>
+        <li id="n2" onclick="open_tag_2()"><a href='#'>Depo İşlem</a></li>
+        <li id="n3" onclick="open_tag_3()"><a href='#'>Kullanıcı Depo Yetkinlendirme</a></li>
+        <li id="n4" onclick="open_tag_4()"><a href='#'>Stok Kart İşlem</a></li>
+        <li id="n5" onclick="open_tag_5()"><a href='#'>Depo Giriş İşlem</a></li>
+    </ul>
+</div>
+
+<!--KULLANICI ISLEM-->
+<div id="tag-1" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title">Kullanıcı Kayıt Formu</h2>
+                <form method="POST">
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Ad</label>
+                                <input class="input--style-4" type="text" name="first_name" id="first_name">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Soyad</label>
+                                <input class="input--style-4" type="text" name="last_name" id="last_name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">TCKN</label>
+                                <input class="input--style-4" type="text" name="tckn" id="tckn">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Kullanıcı Adı</label>
+                                <input class="input--style-4" type="text" name="kullanici_adi" id="kullanici_adi">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Şifre <i class="fa fa-eye" aria-hidden="true"
+                                                              onclick="showPass()"></i></label>
+                                <input id="passId" class="input--style-4" type="password" name="pass">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="label">Rol</label>
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select name="subject" id="rol">
+                                <option disabled="disabled" selected="selected">Seçiniz</option>
+                                <option value="1">Ana Depo Sorumlusu</option>
+                                <option value="2">Bölüm Sorumlusu</option>
+                                <option value="3">Admin</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+                    <div class="p-t-15" id="kullaniciKayitForm">
+                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="container">
+                <div id="kullaniciListele">
+                    <table>
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Kullanıcı ID</th>
+                            <th>TCKN</th>
+                            <th>Rol</th>
+                            <th>Adı Soyadı</th>
+                            <th>Kullanıcı Adı</th>
+                            <th>Şifre</th>
+                            <th>İşlem</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="kullanici in kullaniciList" :key="kullanici.id">
+                            <td>{{kullanici.id}}</td>
+                            <td>{{kullanici.tcNo}}</td>
+                            <td>{{getRolName(kullanici.rolId)}}</td>
+                            <td>{{kullanici.adSoyad}}</td>
+                            <td>{{kullanici.kullaniciAdi}}</td>
+                            <td>{{kullanici.sifre}}<i class="fa fa-eye" aria-hidden="true" onclick="showPass()"></i>
+                            </td>
+                            <td>
+                                <button class="button-vue button1vue" v-on:click="kullaniciSil(kullanici.id)">Sil
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!--DEPO ISLEM-->
+<div id="tag-2" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title">Depo İşlem</h2>
+                <form method="POST">
+                    <div class="row row-space" id="depo-kayit-panel-1">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Depo Adı</label>
+                                <input class="input--style-4" type="text" name="depo-adi" id="depo-adi-id">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Depo Kodu</label>
+                                <input class="input--style-4" type="text" name="depo-kodu" id="depo-kodu-id">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space" id="depo-kayit-panel-2">
+                        <div class="input-group">
+                            <label class="label">Durum</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="subject" id="depo-durum-id">
+                                    <option disabled="disabled" selected="selected">Seçiniz</option>
+                                    <option value="1">Aktif</option>
+                                    <option value="2">Pasif</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-t-15" id="depoKayitForm">
+                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="container">
+                <div id="depoListele">
+                    <table>
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Depo Adı</th>
+                            <th>Depo Kodu</th>
+                            <th>Durum</th>
+                            <th>Oluşturma Tarihi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="depo in depoListesi" :key="depo.id">
+                            <td>{{depo.adi}}</td>
+                            <td>{{depo.kodu}}</td>
+                            <td>{{depo.durum==1?"Aktif":"Pasif"}}</td>
+                            <td>{{depo.tarih}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--KULLANICI DEPO YETKILENDIRME-->
+<div id="tag-3" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title">Kullanıcı Depo Yetkilendirme</h2>
+                <form method="POST">
+                    <div class="row row-space" id="depo-yetki-panel-1">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Kullanıcı</label>
+                                <input class="input--style-4" type="text" name="kullanici-id" id="depoyetki-kullanici-id">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Depo Kodu</label>
+                                <input class="input--style-4" type="text" name="depo-kodu" id="depoyetki-depokodu-id">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-t-15" id="depoYetkilendirmeKayitForm">
+                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="container">
+                <div id="depoYetkilendirmeListele">
+                    <table>
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Kullanıcı ID</th>
+                            <th>Kullanıcı Ad Soyad</th>
+                            <th>Depo Adı</th>
+                            <th>Depo Kodu</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="depoYetki in depoYetkiListesi" :key="depoYetki.id">
+                            <td>{{depoYetki.kullaniciId}}</td>
+                            <td>{{depoYetki.kullaniciAdiSoyad}}</td>
+                            <td>{{depoYetki.depoAdi}}</td>
+                            <td>{{depoYetki.depoKodu}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--STOK KART ISLEM-->
+<div id="tag-4" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title">Stok Kart İşlem</h2>
+                <form method="POST">
+                    <div class="row row-space" id="stok-kart-panel-1">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Stok Kodu</label>
+                                <input class="input--style-4" type="text" name="stok-kodu" id="stok-kodu-id">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Stok Adı</label>
+                                <input class="input--style-4" type="text" name="stok-adi" id="stok-adi-id">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space" id="stok-kart-panel-2">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Barkod</label>
+                                <input class="input--style-4" type="text" name="barkod" id="barkod-id">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Grup Kodu</label>
+                                <input class="input--style-4" type="text" name="grup-kodu" id="grup-kodu-id">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space" id="stok-kart-panel-3">
+                        <div class="input-group">
+                            <label class="label">Durum</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="subject" id="stok-durum-id">
+                                    <option disabled="disabled" selected="selected">Seçiniz</option>
+                                    <option value="1">Aktif</option>
+                                    <option value="2">Pasif</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-t-15" id="stokKartKayitForm">
+                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="container">
+                <div id="stokKartListele">
+                    <table>
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Stok Kodu</th>
+                            <th>Stok Adı</th>
+                            <th>Barkod</th>
+                            <th>Grup Kodu</th>
+                            <th>Durum</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="stok in stokListesi" :key="stok.id">
+                            <td>{{stok.stokKodu}}</td>
+                            <td>{{stok.stokAdi}}</td>
+                            <td>{{stok.barkod}}</td>
+                            <td>{{stok.grupKodu}}</td>
+                            <td>{{stok.durum}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--DEPO GIRIS ISLEM-->
+<div id="tag-5" class="page-wrapper p-t-130 p-b-100 font-poppins" style="background-color: #808B96;">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title">Belge Kayıt Formu</h2>
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Depo Kodu</label>
+                            <input class="input--style-4" type="text" name="depo-kodu" id="b-depo-kodu-id">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Belge No</label>
+                            <input class="input--style-4" type="text" name="belge-no" id="b-belge-no-id">
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Firma No</label>
+                            <input class="input--style-4" type="text" name="firma-no" id="b-firma-no-id">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Belge Tarih</label>
+                            <input class="input--style-2" type="date" name="belge-tarih" id="b-belge-tarih-id">
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="label">Tür</label>
+                    <div class="rs-select2 js-select-simple select--no-search">
+                        <select name="subject" id="belge-tur-id">
+                            <option disabled="disabled" selected="selected">Seçiniz</option>
+                            <option value="1">Giriş</option>
+                            <option value="2">Çıkış</option>
+                        </select>
+                        <div class="select-dropdown"></div>
+                    </div>
+                </div>
+                <div class="p-t-15" id="belgeKayitForm">
+                    <button class="btn btn--radius-2 btn--blue" onclick="ekle()">Ekle</button>
+                </div>
+                <div id="belge-kayit-id">
+                    <table>
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Depo Kodu</th>
+                            <th>Belge No</th>
+                            <th>Firma No</th>
+                            <th>Belge Tarih</th>
+                            <th>Tür</th>
+                        </tr>
+                        </thead>
+                        <tbody id="belge-form-list-id">
+                        </tbody>
+                    </table>
+                    <div class="p-t-15" id="belge-buton-kaydet">
+                        <button class="btn btn--radius-2 btn--blue" onclick="">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/main.js"></script>
+<script src="js/global.js"></script>
+<script src="js/functions.js"></script>
+</html>
