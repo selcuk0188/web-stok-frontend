@@ -431,6 +431,68 @@
             </div>
         </div>
     </div>
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title">Belge Detay Kayıt Formu</h2>
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Belge No</label>
+                            <input class="input--style-4" type="text" name="belge-no" id="bd-belge-no-id">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Stok Kodu</label>
+                            <input class="input--style-4" type="text" name="stok-kodu" id="bd-stok-kodu-id">
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Barkod</label>
+                            <input class="input--style-4" type="text" name="barkod" id="bd-barkod-id">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Miktar</label>
+                            <input class="input--style-4" type="text" name="miktar" id="bd-miktar-id">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Birim Fiyat</label>
+                            <input class="input--style-4" type="text" name="birim-fiyat" id="bd-birim-fiyat-id">
+                        </div>
+                    </div>
+                </div>
+                <div class="p-t-15" id="belgeDetayKayitForm">
+                    <button class="btn btn--radius-2 btn--blue" onclick="ekleBelgeDetay()">Ekle</button>
+                </div>
+                <div id="belge-detay-kayit-id">
+                    <table>
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Belge No</th>
+                            <th>Stok Kodu</th>
+                            <th>Barkod</th>
+                            <th>Miktar</th>
+                            <th>Birim Fiyat</th>
+                        </tr>
+                        </thead>
+                        <tbody id="belge-detay-form-list-id">
+                        </tbody>
+                    </table>
+                    <div class="p-t-15" id="belge-detay-buton-kaydet">
+                        <button class="btn btn--radius-2 btn--blue" onclick="">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script src="js/main.js"></script>

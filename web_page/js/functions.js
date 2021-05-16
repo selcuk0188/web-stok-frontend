@@ -98,6 +98,17 @@ function ekle() {
     doc.innerHTML += td;
 }
 
+function ekleBelgeDetay() {
+    var belgeNo = addTr(document.getElementById("bd-belge-no-id").value);
+    var stokKodu = addTr(document.getElementById("bd-stok-kodu-id").value);
+    var barkod = addTr(document.getElementById("bd-barkod-id").value);
+    var miktar = addTr(document.getElementById("bd-miktar-id").value);
+    var fiyat = addTr(document.getElementById("bd-birim-fiyat-id").value);
+    var td = "<tr>" + belgeNo + stokKodu + barkod + miktar + fiyat + "</tr>";
+    var doc = document.getElementById("belge-detay-form-list-id");
+    doc.innerHTML += td;
+}
+
 function addTr(str) {
     return "<td>" + str + "</td>";
 }
