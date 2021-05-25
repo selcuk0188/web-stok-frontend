@@ -98,22 +98,39 @@ function ekle() {
     doc.innerHTML += td;
 }
 
+var belgeDetayArray=[];
+
 function ekleBelgeDetay() {
-    var belgeNo = addTr(document.getElementById("bd-belge-no-id").value);
-    var stokKodu = addTr(document.getElementById("bd-stok-kodu-id").value);
-    var barkod = addTr(document.getElementById("bd-barkod-id").value);
-    var miktar = addTr(document.getElementById("bd-miktar-id").value);
-    var fiyat = addTr(document.getElementById("bd-birim-fiyat-id").value);
+    var xbelgeNo = document.getElementById("bd-belge-no-id").value;
+    var xstokKodu = document.getElementById("bd-stok-kodu-id").value;
+    var xbarkod = document.getElementById("bd-barkod-id").value;
+    var xmiktar = document.getElementById("bd-miktar-id").value;
+    var xfiyat = document.getElementById("bd-birim-fiyat-id").value;
+    var belgeNo = addTr(xbelgeNo.split("(")[0]);
+    var stokKodu = addTr(xstokKodu.split("(")[0]);
+    var barkod = addTr(xbarkod);
+    var miktar = addTr(xmiktar);
+    var fiyat = addTr(xfiyat);
     var td = "<tr>" + belgeNo + stokKodu + barkod + miktar + fiyat + "</tr>";
     var doc = document.getElementById("belge-detay-form-list-id");
     doc.innerHTML += td;
+
+    var belgeDetay = {
+        belgeNo: Number(xbelgeNo.split("(")[0]),
+        stokKodu: Number(xstokKodu.split("(")[0]),
+        barkod: xbarkod,
+        adet: Number(xmiktar),
+        birimTutar: parseFloat(xfiyat)
+    };
+    belgeDetayArray.push(belgeDetay);
+
 }
 
 function addTr(str) {
     return "<td>" + str + "</td>";
 }
 
-var url = "";
+var url = "http://localhost:8081/stok-yonetim";
 
 // ---------------------------------------- KULLANICI İSLEM ---------------------------------------- //
 new Vue({
@@ -139,7 +156,7 @@ new Vue({
                         tcNo: tckn,
                         kullaniciAdi: kullaniciAdi,
                         sifre: sifre,
-                        durum: "aktif",
+                        durum: 1,
                         rolId: Number(rol)
                     })
                     .then(response => {
@@ -211,7 +228,7 @@ new Vue({
                     .post(url + '/depo/kayit', {
                         depoAdi: depoAdi,
                         depoKodu: depoKodu,
-                        depoDurum: 1 //aktif
+                        depoDurum: parseInt(depoDurum) //aktif
                     })
                     .then(response => {
                         alert("Kullanıcı Başarıyla Kydedilmiştir.");
@@ -234,7 +251,7 @@ new Vue({
     },
     mounted: function () {
         axios
-            .post(url + '/depo/listele')
+            .post(url + '/depo/listele?durum=-1')
             .then(response => {
                 this.depoList = response.data.depoList;
             })
@@ -270,10 +287,12 @@ new Vue({
             } else {
                 var kullaniciId = document.getElementById("depoyetki-kullanici-id").value;
                 var depoKodu = document.getElementById("depoyetki-depokodu-id").value;
+                var s_kullaniciId = parseInt(kullaniciId.split("(")[0]);
+                var s_depoKodu = parseInt(depoKodu.split("(")[0]);
                 axios
                     .post(url + '/depo-yetki/kayit', {
-                        depoAdi: kullaniciId,
-                        depoKodu: depoKodu
+                        kullaniciId: s_kullaniciId,
+                        depoKodu: s_depoKodu
                     })
                     .then(response => {
                         alert("Kullanıcı Başarıyla Kydedilmiştir.");
@@ -298,7 +317,7 @@ new Vue({
         axios
             .post(url + '/depo-yetki/listele')
             .then(response => {
-                this.depoYetkiList = response.data.depoYetkiList;
+                this.depoYetkiList = response.data.kullaniciDepoYetkiList;
             })
             .catch(function (error) {
                 console.log("hata alindi");
@@ -316,6 +335,43 @@ new Vue({
                 })
         }
 
+    }
+})
+
+
+new Vue({
+    el: "#depoYetkiPanel",
+    data() {
+        return {
+            userList1: [],
+            depoList1: []
+        }
+    },
+    mounted: function () {
+    this.getKullaniciList();
+    this.getDepoList();
+    },
+    methods: {
+        getKullaniciList: function () {
+            axios
+                .post(url + '/kullanici/listele')
+            .then(response => {
+                this.userList1 = response.data.kullaniciList;
+            })
+            .catch(function (error) {
+                console.log("hata alindi");
+            })
+        },
+        getDepoList: function () {
+            axios
+                .post(url + '/depo/listele?durum=1')
+            .then(response => {
+                this.depoList1 = response.data.depoList;
+            })
+            .catch(function (error) {
+                console.log("hata alindi");
+            })
+        }
     }
 })
 
@@ -339,16 +395,17 @@ new Vue({
                 var barkodAdi = document.getElementById("barkod-id").value;
                 var grupKodu = document.getElementById("grup-kodu-id").value;
                 var stokDurum = document.getElementById("stok-durum-id").value;
+                var s_grupKodu = parseInt(grupKodu.split("(")[0]);
                 axios
                     .post(url + '/stok-kart/kayit', {
                         stokKodu: stokKodu,
                         stokAdi: stokAdi,
-                        barkodAdi: barkodAdi,
-                        grupKodu: grupKodu,
-                        stokDurum: stokDurum
+                        barkod: barkodAdi,
+                        grupKodu: Number(s_grupKodu),
+                        durum: Number(stokDurum)
                     })
                     .then(response => {
-                        alert("Kullanıcı Başarıyla Kydedilmiştir.");
+                        alert("Kullanıcı Başarıyla Kaydedilmiştir.");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
@@ -368,7 +425,7 @@ new Vue({
     },
     mounted: function () {
         axios
-            .post(url + '/stok-kart/listele')
+            .post(url + '/stok-kart/listele?durum=-1')
             .then(response => {
                 this.stokKartList = response.data.stokKartList;
             })
@@ -388,5 +445,227 @@ new Vue({
                 })
         }
 
+    }
+})
+
+new Vue({
+    el: "#stokKartPanel2",
+    data() {
+        return {
+            stokGrupList1: []
+        }
+    },
+    mounted: function () {
+    this.getStokGrupList();
+    },
+    methods: {
+        getStokGrupList: function () {
+            axios
+                .post(url + '/stok-kart/grup/listele')
+            .then(response => {
+                this.stokGrupList1 = response.data.stokGrupList;
+            })
+            .catch(function (error) {
+                console.log("hata alindi");
+            })
+        }
+    }
+})
+
+// ---------------------------------------- DEPO GİRİŞ/ÇIKIŞ ISLEM ---------------------------------------- //
+
+new Vue({
+    el: "#belgeKayitForm",
+    mounted: function () {
+    },
+    methods: {
+        save: function () {
+            if (document.getElementById("b-depo-kodu-id").value == null ||
+                document.getElementById("b-belge-no-id").value == null ||
+                document.getElementById("b-firma-no-id").value == null ||
+                document.getElementById("b-belge-tarih-id").value == null ||
+                document.getElementById("belge-tur-id").value == null
+            ) {
+                alert("Herhangi bir alan Boş olamaz!!!");
+            } else {
+                var depoKodu = document.getElementById("b-depo-kodu-id").value;
+                var belgeNo = document.getElementById("b-belge-no-id").value;
+                var firmaNo = document.getElementById("b-firma-no-id").value;
+                var belgeTarih = document.getElementById("b-belge-tarih-id").value;
+                var belgeTur = document.getElementById("belge-tur-id").value;
+                var s_depoKodu = parseInt(depoKodu.split("(")[0]);
+                axios
+                    .post(url + '/belge/kayit', {
+                        depoKodu: s_depoKodu,
+                        belgeNo: belgeNo,
+                        firmaNo: firmaNo,
+                        belgeTarihi: belgeTarih,
+                        tur: Number(belgeTur)
+                    })
+                    .then(response => {
+                        alert("Kullanıcı Başarıyla Kaydedilmiştir.");
+                    })
+                    .catch(function (error) {
+                        console.log("hata alindi");
+                    })
+            }
+        }
+    }
+})
+
+
+new Vue({
+    el: "#belgeListele",
+    data() {
+        return {
+            belgeList: []
+        }
+    },
+    mounted: function () {
+        axios
+            .post(url + '/belge/listele')
+            .then(response => {
+                this.belgeList = response.data.belgeList;
+            })
+            .catch(function (error) {
+                console.log("hata alindi");
+            })
+    },
+    methods: {
+        stokKartSil: function (belgeId) {
+            axios
+                .post(url + '/belge/sil?belgeId=' + belgeId)
+                .then(response => {
+                    console.log("Silme İşlemi Başarılı");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+
+    }
+})
+
+new Vue({
+    el: "#belgeKayitForm1",
+    data() {
+        return {
+            depoList2: []
+        }
+    },
+    mounted: function () {
+    this.getDepoList();
+    },
+    methods: {
+        getDepoList: function () {
+            axios
+                .post(url + '/depo/listele?durum=1')
+            .then(response => {
+                this.depoList2 = response.data.depoList;
+            })
+            .catch(function (error) {
+                console.log("hata alindi");
+            })
+        }
+    }
+})
+
+// ---------------------------------------- DEPO DETAY GİRİŞ/ÇIKIŞ ISLEM ---------------------------------------- //
+
+new Vue({
+    el: "#belgeDetayKayitForm2",
+    mounted: function () {
+    },
+    methods: {
+        save: function () {
+            if (document.getElementById("b-depo-kodu-id").value == null ||
+                document.getElementById("b-belge-no-id").value == null ||
+                document.getElementById("b-firma-no-id").value == null ||
+                document.getElementById("b-belge-tarih-id").value == null ||
+                document.getElementById("belge-tur-id").value == null
+            ) {
+                alert("Herhangi bir alan Boş olamaz!!!");
+            } else {
+                axios
+                    .post(url + '/belge-detay/kayit', {
+                        belgeDetayList: belgeDetayArray
+                    })
+                    .then(response => {
+                        alert("Kullanıcı Başarıyla Kaydedilmiştir.");
+                    })
+                    .catch(function (error) {
+                        console.log("hata alindi");
+                    })
+            }
+        }
+    }
+})
+
+
+new Vue({
+    el: "#belgeDetayListele",
+    data() {
+        return {
+            belgeList: []
+        }
+    },
+    mounted: function () {
+        axios
+            .post(url + '/belge-detay/listele')
+            .then(response => {
+                this.belgeList = response.data.belgeList;
+            })
+            .catch(function (error) {
+                console.log("hata alindi");
+            })
+    },
+    methods: {
+        stokKartSil: function (belgeId) {
+            axios
+                .post(url + '/belge-detay/sil?belgeId=' + belgeId)
+                .then(response => {
+                    console.log("Silme İşlemi Başarılı");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+
+    }
+})
+
+new Vue({
+    el: "#belgeDetayForm",
+    data() {
+        return {
+            stokList1: [],
+            belgeList1: []
+        }
+    },
+    mounted: function () {
+        this.getStokList();
+        this.getBelgeList();
+    },
+    methods: {
+        getStokList: function () {
+            axios
+                .post(url + '/stok-kart/listele?durum=1')
+            .then(response => {
+                this.stokList1 = response.data.stokKartList;
+            })
+            .catch(function (error) {
+                console.log("hata alindi");
+            })
+        },
+        getBelgeList: function () {
+            axios
+                .post(url + '/belge/listele')
+            .then(response => {
+                this.belgeList1 = response.data.belgeList;
+            })
+            .catch(function (error) {
+                console.log("hata alindi");
+            })
+        }
     }
 })

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <title>Stok Ekranı</title>
     <meta charset="UTF-8">
@@ -207,11 +207,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="depo in depoListesi" :key="depo.id">
-                            <td>{{depo.adi}}</td>
-                            <td>{{depo.kodu}}</td>
+                        <tr v-for="depo in depoList" :key="depo.id">
+                            <td>{{depo.depoAdi}}</td>
+                            <td>{{depo.depoKodu}}</td>
                             <td>{{depo.durum==1?"Aktif":"Pasif"}}</td>
-                            <td>{{depo.tarih}}</td>
+                            <td>{{depo.olusturmaTarihi}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -228,17 +228,23 @@
             <div class="card-body">
                 <h2 class="title">Kullanıcı Depo Yetkilendirme</h2>
                 <form method="POST">
-                    <div class="row row-space" id="depo-yetki-panel-1">
+                    <div class="row row-space" id="depoYetkiPanel">
                         <div class="col-2">
-                            <div class="input-group">
+                             <div class="input-group">
                                 <label class="label">Kullanıcı</label>
-                                <input class="input--style-4" type="text" name="kullanici-id" id="depoyetki-kullanici-id">
+                                <input id="depoyetki-kullanici-id" type="text" v-model="user1" list="userList1"  @change="getKullaniciList()" placeholder="Seçiniz">
+                                <datalist id="userList1">
+                                    <option v-for="user1 in userList1">{{user1.id}} ({{user1.adSoyad}}) </option>
+                                </datalist>
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Depo Kodu</label>
-                                <input class="input--style-4" type="text" name="depo-kodu" id="depoyetki-depokodu-id">
+                                <input id="depoyetki-depokodu-id" type="text" v-model="depo1" list="depoList1"  @change="getDepoList()" placeholder="Seçiniz">
+                                <datalist id="depoList1">
+                                    <option v-for="depo1 in depoList1">{{depo1.depoKodu}} ({{depo1.depoAdi}}) </option>
+                                </datalist>
                             </div>
                         </div>
                     </div>
@@ -260,14 +266,16 @@
                             <th>Kullanıcı Ad Soyad</th>
                             <th>Depo Adı</th>
                             <th>Depo Kodu</th>
+                            <th>Oluşturma tarihi</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="depoYetki in depoYetkiListesi" :key="depoYetki.id">
+                        <tr v-for="depoYetki in depoYetkiList" :key="depoYetki.id">
                             <td>{{depoYetki.kullaniciId}}</td>
                             <td>{{depoYetki.kullaniciAdiSoyad}}</td>
                             <td>{{depoYetki.depoAdi}}</td>
                             <td>{{depoYetki.depoKodu}}</td>
+                            <td>{{depoYetki.olusturmaTarihi}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -298,7 +306,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row row-space" id="stok-kart-panel-2">
+                    <div class="row row-space" id="stokKartPanel2">
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Barkod</label>
@@ -308,7 +316,10 @@
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Grup Kodu</label>
-                                <input class="input--style-4" type="text" name="grup-kodu" id="grup-kodu-id">
+                                <input id="grup-kodu-id" type="text" v-model="stokGrup1" list="stokGrupList1"  @change="getStokGrupList()" placeholder="Seçiniz">
+                                <datalist id="stokGrupList1">
+                                    <option v-for="stok1 in stokGrupList1">{{stok1.grupKodu}} ({{stok1.grupAdi}}) </option>
+                                </datalist>
                             </div>
                         </div>
                     </div>
@@ -344,15 +355,17 @@
                             <th>Barkod</th>
                             <th>Grup Kodu</th>
                             <th>Durum</th>
+                            <th>Oluşturma Tarihi</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="stok in stokListesi" :key="stok.id">
+                        <tr v-for="stok in stokKartList" :key="stok.id">
                             <td>{{stok.stokKodu}}</td>
                             <td>{{stok.stokAdi}}</td>
                             <td>{{stok.barkod}}</td>
                             <td>{{stok.grupKodu}}</td>
-                            <td>{{stok.durum}}</td>
+                            <td>{{stok.durum==1?"Aktif":"Pasif"}}</td>
+                            <td>{{stok.olusturmaTarihi}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -362,17 +375,20 @@
     </div>
 </div>
 
-<!--DEPO GIRIS ISLEM-->
+<!--DEPO GİRİŞ/ÇIKIŞ İŞLEM-->
 <div id="tag-5" class="page-wrapper p-t-130 p-b-100 font-poppins" style="background-color: #808B96;">
     <div class="wrapper wrapper--w680">
         <div class="card card-4">
             <div class="card-body">
                 <h2 class="title">Belge Kayıt Formu</h2>
-                <div class="row row-space">
+                <div class="row row-space" id="belgeKayitForm1">
                     <div class="col-2">
                         <div class="input-group">
-                            <label class="label">Depo Kodu</label>
-                            <input class="input--style-4" type="text" name="depo-kodu" id="b-depo-kodu-id">
+                                <label class="label">Depo Kodu</label>
+                                <input id="b-depo-kodu-id" type="text" v-model="depo2" list="depoList2"  @change="getDepoList()" placeholder="Seçiniz">
+                                <datalist id="depoList2">
+                                    <option v-for="depo2 in depoList2">{{depo2.depoKodu}} ({{depo2.depoAdi}}) </option>
+                                </datalist>
                         </div>
                     </div>
                     <div class="col-2">
@@ -408,9 +424,9 @@
                     </div>
                 </div>
                 <div class="p-t-15" id="belgeKayitForm">
-                    <button class="btn btn--radius-2 btn--blue" onclick="ekle()">Ekle</button>
+                    <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
                 </div>
-                <div id="belge-kayit-id">
+                <div id="belgeListele">
                     <table>
                         <thead class="thead-dark">
                         <tr>
@@ -419,33 +435,46 @@
                             <th>Firma No</th>
                             <th>Belge Tarih</th>
                             <th>Tür</th>
+                            <th>Oluşturma Tarihi</th>
                         </tr>
                         </thead>
-                        <tbody id="belge-form-list-id">
+                        <tbody>
+                        <tr v-for="belge in belgeList" :key="belge.id">
+                            <td>{{belge.depoKodu}}</td>
+                            <td>{{belge.belgeNo}}</td>
+                            <td>{{belge.firmaNo}}</td>
+                            <td>{{belge.belgeTarihi}}</td>
+                            <td>{{belge.tur==1?"Giriş":"Çıkış"}}</td>
+                            <td>{{belge.olusturmaTarihi}}</td>
+                        </tr>
                         </tbody>
                     </table>
-                    <div class="p-t-15" id="belge-buton-kaydet">
-                        <button class="btn btn--radius-2 btn--blue" onclick="">Kaydet</button>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Belge Detay Kayıt Formu -->
     <div class="wrapper wrapper--w680">
         <div class="card card-4">
             <div class="card-body">
                 <h2 class="title">Belge Detay Kayıt Formu</h2>
-                <div class="row row-space">
+                <div class="row row-space" id ="belgeDetayForm">
                     <div class="col-2">
                         <div class="input-group">
-                            <label class="label">Belge No</label>
-                            <input class="input--style-4" type="text" name="belge-no" id="bd-belge-no-id">
+                                <label class="label">Belge No</label>
+                                <input id="bd-belge-no-id" type="text" v-model="belge1" list="belgeList1"  @change="getBelgeList()" placeholder="Seçiniz">
+                                <datalist id="belgeList1">
+                                    <option v-for="belge1 in belgeList1">{{belge1.belgeNo}} (Depo Kodu: {{belge1.depoKodu}}) </option>
+                                </datalist>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="input-group">
-                            <label class="label">Stok Kodu</label>
-                            <input class="input--style-4" type="text" name="stok-kodu" id="bd-stok-kodu-id">
+                                <label class="label">Stok Kodu</label>
+                                <input id="bd-stok-kodu-id" type="text" v-model="stok1" list="stokList1"  @change="getStokList()" placeholder="Seçiniz">
+                                <datalist id="stokList1">
+                                    <option v-for="stok1 in stokList1">{{stok1.stokKodu}} ({{stok1.stokAdi}}) </option>
+                                </datalist>
                         </div>
                     </div>
                 </div>
@@ -472,7 +501,7 @@
                 <div class="p-t-15" id="belgeDetayKayitForm">
                     <button class="btn btn--radius-2 btn--blue" onclick="ekleBelgeDetay()">Ekle</button>
                 </div>
-                <div id="belge-detay-kayit-id">
+                <div>
                     <table>
                         <thead class="thead-dark">
                         <tr>
@@ -486,8 +515,8 @@
                         <tbody id="belge-detay-form-list-id">
                         </tbody>
                     </table>
-                    <div class="p-t-15" id="belge-detay-buton-kaydet">
-                        <button class="btn btn--radius-2 btn--blue" onclick="">Kaydet</button>
+                    <div class="p-t-15" id="belgeDetayKayitForm2">
+                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
                     </div>
                 </div>
             </div>
