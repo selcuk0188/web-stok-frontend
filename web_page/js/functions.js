@@ -14,19 +14,53 @@ for (var i = 0; i < navbar.length; i++) {
     });
 }
 
-//var kullaniciId = getParameterByName('kullaniciId');
+var userId = getParameterByName('kullaniciId');
 var rolId = getParameterByName('rolId');
 
 if (rolId == '1') {
-    document.getElementById('n5').innerHTML = '';
-    document.getElementById('tag-5').innerHTML = '';
+   closeTags();
 }
 if (rolId == "2") {
+    document.getElementById('firma-no-div-id').style.display = "none";
+    document.getElementById('tur-div-id').style.display = "none";
     closeTags();
 }
 if (rolId == "3") {
-    closeTags();
+    document.getElementById('n5').innerHTML = '';
+    document.getElementById('tag-5').innerHTML = '';
 }
+
+function goToLoginPage() {
+    window.location.href = '../index.html';
+}
+
+function setKullaniciField(kullanici) {
+		var profileAdSoyad = document.getElementById("profileAdSoyad");
+		profileAdSoyad.innerHTML = kullanici.adSoyad;
+		var rolAdi = document.getElementById("rolName");
+		var rolName;
+		if(kullanici.rolId=='1')
+			rolName = "Ana Depo Sorumlusu";
+		else if(kullanici.rolId=='2')
+			rolName = "Bölüm Sorumlusu";
+		else if(kullanici.rolId=='2')
+			rolName = "Admin";
+		rolAdi.innerHTML = rolName;
+}
+
+function setKullaniciDepoYetkiField(depolar) {
+        var yetkiliDepolar = document.getElementById("yetkiliDepolar");
+        var depos="Yetkili Depolar: [";
+        for(var i = 0; i < depolar.length ; i++){
+            depos+=depolar[i].depoAdi;
+            if(i==depolar.length-1)
+                depos+="]";
+            else
+                depos+=",";
+        }
+		yetkiliDepolar.innerHTML = depos;
+}
+
 
 function closeTags() {
     for (var i = 1; i < 5; i++) {
@@ -130,6 +164,11 @@ function addTr(str) {
     return "<td>" + str + "</td>";
 }
 
+
+function convertHistory(hist) {
+    return hist;
+}
+
 var url = "http://localhost:8081/stok-yonetim";
 
 // ---------------------------------------- KULLANICI İSLEM ---------------------------------------- //
@@ -179,6 +218,8 @@ new Vue({
         }
     },
     mounted: function () {
+        this.getUser();
+        this.getKullaniciDepoYetkiList();
         axios
             .post(url + '/kullanici/listele')
             .then(response => {
@@ -199,13 +240,47 @@ new Vue({
             axios
                 .post(url + '/kullanici/sil?kullaniciId=' + kullaniciId)
                 .then(response => {
-                    console.log("Silme İşlemi Başarılı");
+                    alert("Silme İşlemi Başarılı");
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
+        },
+        getUser: function () {
+            axios
+                .post(url + '/kullanici/id?kullaniciId=' + userId)
+                .then(response => {
+                    setKullaniciField(response.data.kullanici);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        },
+        getKullaniciDepoYetkiList: function () {
+            if (rolId == 2) {
+                axios
+                    .post(url + '/depo-yetki/listele/kullanici?kullaniciId=' + userId)
+                    .then(response => {
+                        setKullaniciDepoYetkiField(response.data.kullaniciDepoYetkiList);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            }
+            if (rolId == 1) {
+                axios
+                    .post(url + '/depo/listele?durum=1')
+                    .then(response => {
+                        setKullaniciDepoYetkiField(response.data.depoList);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            }
+        },
+        convertHistory: function (hist) {
+            convertHistory(hist);
         }
-
     }
 })
 
@@ -269,6 +344,9 @@ new Vue({
                 .catch(function (error) {
                     console.log(error);
                 })
+        },
+        convertHistory: function (hist) {
+            convertHistory(hist);
         }
 
     }
@@ -333,6 +411,9 @@ new Vue({
                 .catch(function (error) {
                     console.log(error);
                 })
+        },
+        convertHistory: function (hist) {
+            convertHistory(hist);
         }
 
     }
@@ -354,7 +435,7 @@ new Vue({
     methods: {
         getKullaniciList: function () {
             axios
-                .post(url + '/kullanici/listele')
+                .post(url + '/kullanici/listele/rol?rolId=2')
             .then(response => {
                 this.userList1 = response.data.kullaniciList;
             })
@@ -443,6 +524,9 @@ new Vue({
                 .catch(function (error) {
                     console.log(error);
                 })
+        },
+        convertHistory: function (hist) {
+            convertHistory(hist);
         }
 
     }
@@ -541,6 +625,9 @@ new Vue({
                 .catch(function (error) {
                     console.log(error);
                 })
+        },
+        convertHistory: function (hist) {
+            convertHistory(hist);
         }
 
     }
@@ -559,9 +646,9 @@ new Vue({
     methods: {
         getDepoList: function () {
             axios
-                .post(url + '/depo/listele?durum=1')
+                .post(url + '/depo-yetki/listele/kullanici?kullaniciId='+kullaniciId)
             .then(response => {
-                this.depoList2 = response.data.depoList;
+                this.depoList2 = response.data.kullaniciDepoYetkiList;
             })
             .catch(function (error) {
                 console.log("hata alindi");
@@ -629,6 +716,9 @@ new Vue({
                 .catch(function (error) {
                     console.log(error);
                 })
+        },
+        convertHistory: function (hist) {
+            convertHistory(hist);
         }
 
     }

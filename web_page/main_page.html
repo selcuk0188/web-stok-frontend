@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link href="css/main-admin.css" rel="stylesheet" media="all">
     <link rel="stylesheet" type="text/css" href="css/menu_style.css">
-    <link rel="stylesheet" type="text/css" href="css/menu_style_default.css">
+    <link rel="stylesheet" type="text/css" href="css/main_style_default.css">
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -49,7 +49,29 @@
         <li id="n5" onclick="open_tag_5()"><a href='#'>Depo Giriş İşlem</a></li>
     </ul>
 </div>
-
+<div class="row" style="height: 110px;width:3000px;background-color: rgb(128, 139, 150);">
+	<div class="col-12">
+		<div class="well well-sm">
+			<div class="media">
+                <div class="row">&nbsp;</div>
+				<div class="row">
+                    <div class="col-4">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+					<div class="col-1">
+						<img src="profile-pic-64x.png" class="avatar"></a>
+					</div>
+					<div class="col-4" style="padding-left: 10px;padding-top: 8px">
+						<div class="media-body">
+							<h4 id="profileAdSoyad" class="media-heading" style="color:white;"></h4>
+							<p id="rolName" class="media-heading" style="color:white;"></p>
+                            <p id="yetkiliDepolar" class="media-heading" style="color:white;"></p>
+							<button class="button-vue button1vue" onclick="goToLoginPage()">Çıkış</button></td>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <!--KULLANICI ISLEM-->
 <div id="tag-1" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
     <div class="wrapper wrapper--w680">
@@ -113,6 +135,7 @@
             </div>
         </div>
     </div>
+    &nbsp;
     <div class="wrapper wrapper--w680">
         <div class="card card-4">
             <div class="container">
@@ -193,6 +216,7 @@
             </div>
         </div>
     </div>
+    &nbsp;
     <div class="wrapper wrapper--w680">
         <div class="card card-4">
             <div class="container">
@@ -204,6 +228,7 @@
                             <th>Depo Kodu</th>
                             <th>Durum</th>
                             <th>Oluşturma Tarihi</th>
+                            <th>İşlem</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -212,6 +237,9 @@
                             <td>{{depo.depoKodu}}</td>
                             <td>{{depo.durum==1?"Aktif":"Pasif"}}</td>
                             <td>{{depo.olusturmaTarihi}}</td>
+                            <td>
+                                <button class="button-vue button1vue" v-on:click="depoSil(depo.id)">Sil</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -255,6 +283,7 @@
             </div>
         </div>
     </div>
+    &nbsp;
     <div class="wrapper wrapper--w680">
         <div class="card card-4">
             <div class="container">
@@ -267,6 +296,7 @@
                             <th>Depo Adı</th>
                             <th>Depo Kodu</th>
                             <th>Oluşturma tarihi</th>
+                            <th>İşlem</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -276,6 +306,9 @@
                             <td>{{depoYetki.depoAdi}}</td>
                             <td>{{depoYetki.depoKodu}}</td>
                             <td>{{depoYetki.olusturmaTarihi}}</td>
+                            <td>
+                                <button class="button-vue button1vue" v-on:click="depoYetkiSil(depoYetki.id)">Sil</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -343,6 +376,7 @@
             </div>
         </div>
     </div>
+    &nbsp;
     <div class="wrapper wrapper--w680">
         <div class="card card-4">
             <div class="container">
@@ -356,6 +390,7 @@
                             <th>Grup Kodu</th>
                             <th>Durum</th>
                             <th>Oluşturma Tarihi</th>
+                            <th>İşlem</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -366,6 +401,9 @@
                             <td>{{stok.grupKodu}}</td>
                             <td>{{stok.durum==1?"Aktif":"Pasif"}}</td>
                             <td>{{stok.olusturmaTarihi}}</td>
+                            <td>
+                                <button class="button-vue button1vue" v-on:click="stokSil(stok.id)">Sil</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -376,7 +414,13 @@
 </div>
 
 <!--DEPO GİRİŞ/ÇIKIŞ İŞLEM-->
-<div id="tag-5" class="page-wrapper p-t-130 p-b-100 font-poppins" style="background-color: #808B96;">
+<div id="tag-5" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
+    <div class="row">	&nbsp;</div>
+<div class="row">
+    <div class="col-4">
+        	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp;
+    </div>
+  <div class="col-4">
     <div class="wrapper wrapper--w680">
         <div class="card card-4">
             <div class="card-body">
@@ -401,32 +445,38 @@
                 <div class="row row-space">
                     <div class="col-2">
                         <div class="input-group">
-                            <label class="label">Firma No</label>
-                            <input class="input--style-4" type="text" name="firma-no" id="b-firma-no-id">
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="input-group">
                             <label class="label">Belge Tarih</label>
                             <input class="input--style-2" type="date" name="belge-tarih" id="b-belge-tarih-id">
                         </div>
                     </div>
+                    <div class="col-2" id="firma-no-div-id">
+                        <div class="input-group">
+                            <label class="label">Firma No</label>
+                            <input class="input--style-4" type="text" name="firma-no" id="b-firma-no-id">
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group">
+                <div class="col-2">
+                    <div class="input-group" id="tur-div-id">
                     <label class="label">Tür</label>
-                    <div class="rs-select2 js-select-simple select--no-search">
                         <select name="subject" id="belge-tur-id">
                             <option disabled="disabled" selected="selected">Seçiniz</option>
                             <option value="1">Giriş</option>
                             <option value="2">Çıkış</option>
                         </select>
-                        <div class="select-dropdown"></div>
-                    </div>
+                     </div>
                 </div>
                 <div class="p-t-15" id="belgeKayitForm">
                     <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
                 </div>
-                <div id="belgeListele">
+                  </div>
+                  </div>
+                  </div>
+                    &nbsp;
+                 <div class="wrapper wrapper--w680">
+                    <div class="card card-4">
+                        <div class="container">
+                            <div id="belgeListele">
                     <table>
                         <thead class="thead-dark">
                         <tr>
@@ -436,6 +486,7 @@
                             <th>Belge Tarih</th>
                             <th>Tür</th>
                             <th>Oluşturma Tarihi</th>
+                            <th>İşlem</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -446,13 +497,23 @@
                             <td>{{belge.belgeTarihi}}</td>
                             <td>{{belge.tur==1?"Giriş":"Çıkış"}}</td>
                             <td>{{belge.olusturmaTarihi}}</td>
+                            <td>
+                                <button class="button-vue button1vue" v-on:click="belgeSil(belge.id)">Sil</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+
+
+    <div class="col-1">
+        	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp;
     </div>
+    <div class="col-4">
     <!-- Belge Detay Kayıt Formu -->
     <div class="wrapper wrapper--w680">
         <div class="card card-4">
@@ -501,6 +562,17 @@
                 <div class="p-t-15" id="belgeDetayKayitForm">
                     <button class="btn btn--radius-2 btn--blue" onclick="ekleBelgeDetay()">Ekle</button>
                 </div>
+
+                  </div>
+              </div>
+          </div>
+          </div>
+    <div class="col-1">
+        	&nbsp;
+    </div>
+          <div class="col-4">
+              <div class="wrapper wrapper--w680">
+        <div class="card card-4">
                 <div>
                     <table>
                         <thead class="thead-dark">
@@ -510,18 +582,25 @@
                             <th>Barkod</th>
                             <th>Miktar</th>
                             <th>Birim Fiyat</th>
+                            <th>&nbsp;</th>
                         </tr>
                         </thead>
                         <tbody id="belge-detay-form-list-id">
                         </tbody>
+
                     </table>
-                    <div class="p-t-15" id="belgeDetayKayitForm2">
+
+                </div>
+
+        </div>
+                <div class="p-t-15" id="belgeDetayKayitForm2">
                         <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
                     </div>
-                </div>
-            </div>
         </div>
-    </div>
+              &nbsp;
+        </div>
+        </div>
+
 </div>
 </body>
 <script src="js/main.js"></script>
