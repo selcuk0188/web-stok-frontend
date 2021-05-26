@@ -15,6 +15,8 @@ for (var i = 0; i < navbar.length; i++) {
 }
 var userId = getParameterByName('kullaniciId');
 
+document.getElementById('belgeDetayKayitForm2').style.display = "none";
+
 function loadPage(rolId) {
 
     if (rolId == '1') {
@@ -39,31 +41,31 @@ function goToLoginPage() {
 }
 
 function setKullaniciField(kullanici) {
-		var profileAdSoyad = document.getElementById("profileAdSoyad");
-		profileAdSoyad.innerHTML = kullanici.adSoyad;
-		var rolAdi = document.getElementById("rolName");
-		var rolName;
-		if(kullanici.rolId=='1')
-			rolName = "Ana Depo Sorumlusu";
-		else if(kullanici.rolId=='2')
-			rolName = "Bölüm Sorumlusu";
-		else if(kullanici.rolId=='3')
-			rolName = "Admin";
-		rolAdi.innerHTML = rolName;
-		loadPage(kullanici.rolId);
+    var profileAdSoyad = document.getElementById("profileAdSoyad");
+    profileAdSoyad.innerHTML = kullanici.adSoyad;
+    var rolAdi = document.getElementById("rolName");
+    var rolName;
+    if (kullanici.rolId == '1')
+        rolName = "Ana Depo Sorumlusu";
+    else if (kullanici.rolId == '2')
+        rolName = "Bölüm Sorumlusu";
+    else if (kullanici.rolId == '3')
+        rolName = "Admin";
+    rolAdi.innerHTML = rolName;
+    loadPage(kullanici.rolId);
 }
 
 function setKullaniciDepoYetkiField(depolar) {
-        var yetkiliDepolar = document.getElementById("yetkiliDepolar");
-        var depos="Yetkili Depolar: [";
-        for(var i = 0; i < depolar.length ; i++){
-            depos+=depolar[i].depoKodu + "(" + depolar[i].depoAdi +")";
-            if(i==depolar.length-1)
-                depos+="]";
-            else
-                depos+=",";
-        }
-		yetkiliDepolar.innerHTML = depos;
+    var yetkiliDepolar = document.getElementById("yetkiliDepolar");
+    var depos = "Yetkili Depolar: [";
+    for (var i = 0; i < depolar.length; i++) {
+        depos += depolar[i].depoKodu + "(" + depolar[i].depoAdi + ")";
+        if (i == depolar.length - 1)
+            depos += "]";
+        else
+            depos += ",";
+    }
+    yetkiliDepolar.innerHTML = depos;
 }
 
 
@@ -117,9 +119,9 @@ function showPass() {
     }
 }
 
-function isNumber(str){
+function isNumber(str) {
     var regExp = "/^[A-Za-z]+$/";
-   return !(str.match(regExp));
+    return !(str.match(regExp));
 }
 
 function getParameterByName(name, url = window.location.href) {
@@ -142,30 +144,31 @@ function ekle() {
     doc.innerHTML += td;
 }
 
-var belgeDetayArray=[];
+var belgeDetayArray = [];
 
 function ekleBelgeDetay() {
+
     var xbelgeNo = document.getElementById("bd-belge-no-id").value;
     var xstokKodu = document.getElementById("bd-stok-kodu-id").value;
     var xbarkod = document.getElementById("bd-barkod-id").value;
     var xmiktar = document.getElementById("bd-miktar-id").value;
     var xfiyat = document.getElementById("bd-birim-fiyat-id").value;
-    if(xbelgeNo=="" || xstokKodu=="" || xbarkod=="" || xmiktar=="" || xfiyat==""){
+    if (xbelgeNo == "" || xstokKodu == "" || xbarkod == "" || xmiktar == "" || xfiyat == "") {
         alert("Boş alan olamaz!");
         return;
     }
-    if(!isNumber(xbarkod)){
+    if (!isNumber(xbarkod)) {
         alert("Alanlar sayı olmalıdır!");
         return;
     }
-
-    var belgeNo = addTr(xbelgeNo.split("(")[0]);
+    document.getElementById('belgeDetayKayitForm2').style.display = "block";
+    var belgeNo = addTr(xbelgeNo);
     var stokKodu = addTr(xstokKodu.split("(")[0]);
     var barkod = addTr(xbarkod);
     var miktar = addTr(xmiktar);
     var fiyat = addTr(xfiyat);
     var toplamFiyat = addTr(parseInt(xmiktar) * parseFloat(xfiyat));
-    var td = "<tr>" + belgeNo + stokKodu + barkod + miktar + fiyat + toplamFiyat + "</tr>";
+    var td = "<tr>" + addTr("&nbsp;&nbsp;") + belgeNo + stokKodu + barkod + miktar + fiyat + toplamFiyat + "</tr>";
     var doc = document.getElementById("belge-detay-form-list-id");
     doc.innerHTML += td;
 
@@ -442,29 +445,29 @@ new Vue({
         }
     },
     mounted: function () {
-    this.getKullaniciList();
-    this.getDepoList();
+        this.getKullaniciList();
+        this.getDepoList();
     },
     methods: {
         getKullaniciList: function () {
             axios
                 .post(url + '/kullanici/listele/rol?rolId=2')
-            .then(response => {
-                this.userList1 = response.data.kullaniciList;
-            })
-            .catch(function (error) {
-                console.log("hata alindi");
-            })
+                .then(response => {
+                    this.userList1 = response.data.kullaniciList;
+                })
+                .catch(function (error) {
+                    console.log("hata alindi");
+                })
         },
         getDepoList: function () {
             axios
                 .post(url + '/depo/listele?durum=1')
-            .then(response => {
-                this.depoList1 = response.data.depoList;
-            })
-            .catch(function (error) {
-                console.log("hata alindi");
-            })
+                .then(response => {
+                    this.depoList1 = response.data.depoList;
+                })
+                .catch(function (error) {
+                    console.log("hata alindi");
+                })
         }
     }
 })
@@ -553,18 +556,18 @@ new Vue({
         }
     },
     mounted: function () {
-    this.getStokGrupList();
+        this.getStokGrupList();
     },
     methods: {
         getStokGrupList: function () {
             axios
                 .post(url + '/stok-kart/grup/listele')
-            .then(response => {
-                this.stokGrupList1 = response.data.stokGrupList;
-            })
-            .catch(function (error) {
-                console.log("hata alindi");
-            })
+                .then(response => {
+                    this.stokGrupList1 = response.data.stokGrupList;
+                })
+                .catch(function (error) {
+                    console.log("hata alindi");
+                })
         }
     }
 })
@@ -587,13 +590,13 @@ new Vue({
                 var belgeNo = document.getElementById("b-belge-no-id").value;
                 var firmaNo = document.getElementById("b-firma-no-id").value;
                 var s_firmaNo = null;
-                if(document.getElementById("b-firma-no-id")!=null)
+                if (document.getElementById("b-firma-no-id") != null)
                     s_firmaNo = parseInt(firmaNo.split("(")[0]);
                 var belgeTarih = document.getElementById("b-belge-tarih-id").value;
                 var belgeTur;
-                if(document.getElementById("belge-tur-id")==null)
+                if (document.getElementById("belge-tur-id") == null)
                     belgeTur = "1";
-               else
+                else
                     belgeTur = document.getElementById("belge-tur-id").value;
                 var s_depoKodu = parseInt(depoKodu.split("(")[0]);
                 axios
@@ -625,37 +628,29 @@ new Vue({
         }
     },
     mounted: function () {
-        axios
-            .post(url + '/belge/listele')
-            .then(response => {
-                this.belgeList = response.data.belgeList;
-            })
-            .catch(function (error) {
-                console.log("hata alindi");
-            })
+        this.getBelgeList();
     },
     methods: {
-        stokKartSil: function (belgeId) {
+        getBelgeList: function () {
             axios
-                .post(url + '/belge/sil?belgeId=' + belgeId)
+                .post(url + '/belge/listele?kullaniciId=' + userId)
                 .then(response => {
-                    console.log("Silme İşlemi Başarılı");
+                    this.belgeList = response.data.belgeList;
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.log("hata alindi");
                 })
-        },
-        convertHistory: function (hist) {
-            convertHistory(hist);
         }
 
     }
 })
 
 var rolID = 0;
-function setRolId(p_rolID){
+
+function setRolId(p_rolID) {
     rolID = p_rolID.rolId;
 }
+
 new Vue({
     el: "#belgeKayitForm1",
     data() {
@@ -679,7 +674,7 @@ new Vue({
                 });
         },
         getDepoList2: function () {
-            if(rolID==2) {
+            if (rolID == 2) {
                 axios
                     .post(url + '/depo-yetki/listele/kullanici?kullaniciId=' + userId)
                     .then(response => {
@@ -688,8 +683,7 @@ new Vue({
                     .catch(function (error) {
                         console.log("hata alindi");
                     })
-            }
-            else{
+            } else {
                 axios
                     .post(url + '/depo/listele?durum=1')
                     .then(response => {
@@ -698,9 +692,9 @@ new Vue({
                     .catch(function (error) {
                         console.log("hata alindi");
                     })
-              }
-          }
+            }
         }
+    }
 })
 new Vue({
     el: "#belgeKayitForm2",
@@ -716,12 +710,12 @@ new Vue({
         getFirmaList: function () {
             axios
                 .post(url + '/firma/listele')
-            .then(response => {
-                this.firmaList = response.data.firmaList;
-            })
-            .catch(function (error) {
-                console.log("hata alindi");
-            })
+                .then(response => {
+                    this.firmaList = response.data.firmaList;
+                })
+                .catch(function (error) {
+                    console.log("hata alindi");
+                })
         }
     }
 })
@@ -758,34 +752,30 @@ new Vue({
     el: "#belgeDetayListele",
     data() {
         return {
-            belgeList: []
+            belgeDetayList: []
         }
     },
     mounted: function () {
         axios
-            .post(url + '/belge-detay/listele')
+            .post(url + '/belge-detay/listele?kullaniciId=' + userId)
             .then(response => {
-                this.belgeList = response.data.belgeList;
+                this.belgeDetayList = response.data.belgeDetayList;
             })
             .catch(function (error) {
                 console.log("hata alindi");
             })
     },
     methods: {
-        stokKartSil: function (belgeId) {
+        belgeDetaySil: function (belgeDetayId) {
             axios
-                .post(url + '/belge-detay/sil?belgeId=' + belgeId)
+                .post(url + '/belge-detay/sil?belgeId=' + belgeDetayId)
                 .then(response => {
                     console.log("Silme İşlemi Başarılı");
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
-        },
-        convertHistory: function (hist) {
-            convertHistory(hist);
         }
-
     }
 })
 
@@ -805,22 +795,22 @@ new Vue({
         getStokList: function () {
             axios
                 .post(url + '/stok-kart/listele?durum=1')
-            .then(response => {
-                this.stokList1 = response.data.stokKartList;
-            })
-            .catch(function (error) {
-                console.log("hata alindi");
-            })
+                .then(response => {
+                    this.stokList1 = response.data.stokKartList;
+                })
+                .catch(function (error) {
+                    console.log("hata alindi");
+                })
         },
         getBelgeList: function () {
             axios
                 .post(url + '/belge/listele')
-            .then(response => {
-                this.belgeList1 = response.data.belgeList;
-            })
-            .catch(function (error) {
-                console.log("hata alindi");
-            })
+                .then(response => {
+                    this.belgeList1 = response.data.belgeList;
+                })
+                .catch(function (error) {
+                    console.log("hata alindi");
+                })
         }
     }
 })
