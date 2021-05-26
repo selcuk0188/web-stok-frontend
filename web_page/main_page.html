@@ -150,7 +150,6 @@
                             <th>Adı Soyadı</th>
                             <th>Kullanıcı Adı</th>
                             <th>Şifre</th>
-                            <th>İşlem</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -161,10 +160,6 @@
                             <td>{{kullanici.adSoyad}}</td>
                             <td>{{kullanici.kullaniciAdi}}</td>
                             <td>{{kullanici.sifre}}<i class="fa fa-eye" aria-hidden="true" onclick="showPass()"></i>
-                            </td>
-                            <td>
-                                <button class="button-vue button1vue" v-on:click="kullaniciSil(kullanici.id)">Sil
-                                </button>
                             </td>
                         </tr>
                         </tbody>
@@ -229,7 +224,6 @@
                             <th>Depo Kodu</th>
                             <th>Durum</th>
                             <th>Oluşturma Tarihi</th>
-                            <th>İşlem</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -238,9 +232,6 @@
                             <td>{{depo.depoKodu}}</td>
                             <td>{{depo.durum==1?"Aktif":"Pasif"}}</td>
                             <td>{{depo.olusturmaTarihi}}</td>
-                            <td>
-                                <button class="button-vue button1vue" v-on:click="depoSil(depo.id)">Sil</button>
-                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -299,7 +290,6 @@
                             <th>Depo Adı</th>
                             <th>Depo Kodu</th>
                             <th>Oluşturma tarihi</th>
-                            <th>İşlem</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -309,10 +299,6 @@
                             <td>{{depoYetki.depoAdi}}</td>
                             <td>{{depoYetki.depoKodu}}</td>
                             <td>{{depoYetki.olusturmaTarihi}}</td>
-                            <td>
-                                <button class="button-vue button1vue" v-on:click="depoYetkiSil(depoYetki.id)">Sil
-                                </button>
-                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -396,7 +382,6 @@
                             <th>Grup Kodu</th>
                             <th>Durum</th>
                             <th>Oluşturma Tarihi</th>
-                            <th>İşlem</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -407,9 +392,6 @@
                             <td>{{stok.grupKodu}}</td>
                             <td>{{stok.durum==1?"Aktif":"Pasif"}}</td>
                             <td>{{stok.olusturmaTarihi}}</td>
-                            <td>
-                                <button class="button-vue button1vue" v-on:click="stokSil(stok.id)">Sil</button>
-                            </td>
                         </tr>
                         </tbody>
                     </table>
