@@ -10,10 +10,10 @@
             }
         }
         //const axios = require('axios').default;
-        var tckn = $(input[0]).val(); // tckn
+        var kullaniciAdi = $(input[0]).val(); // kullaniciAdi
         var sifre = $(input[1]).val(); // sifre
-
-        const endPoint = url + "?tckn=" + tckn + "&sifre=" + sifre;
+        var url = "http://localhost:8081/stok-yonetim/kullanici";
+        const endPoint = url + "/login?kullaniciAdi=" + kullaniciAdi + "&sifre=" + sifre;
         e.preventDefault();
         $.when(
             axios({
@@ -39,11 +39,8 @@
         if (basariliMi != true) {
             alert("Kullanıcı adı veya şifre yanlış!");
         } else {
-            var rolId = input.kullanici.rolId;
             var kullaniciId = input.kullanici.id;
-            var adSoyad = input.kullanici.adSoyad;
-
-            window.location.href = 'web_page/ekran_depo_sorumlusu.html?kullaniciId=' + kullaniciId + '&rolId=' + rolId;
+            window.location.href = 'web_page/main_page.html?kullaniciId=' + kullaniciId;
         }
     }
 

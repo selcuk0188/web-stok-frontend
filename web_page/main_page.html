@@ -50,27 +50,28 @@
     </ul>
 </div>
 <div class="row" style="height: 110px;width:3000px;background-color: rgb(128, 139, 150);">
-	<div class="col-12">
-		<div class="well well-sm">
-			<div class="media">
+    <div class="col-12">
+        <div class="well well-sm">
+            <div class="media">
                 <div class="row">&nbsp;</div>
-				<div class="row">
+                <div class="row">
                     <div class="col-4">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-					<div class="col-1">
-						<img src="profile-pic-64x.png" class="avatar"></a>
-					</div>
-					<div class="col-4" style="padding-left: 10px;padding-top: 8px">
-						<div class="media-body">
-							<h4 id="profileAdSoyad" class="media-heading" style="color:white;"></h4>
-							<p id="rolName" class="media-heading" style="color:white;"></p>
+                    <div class="col-1">
+                        <img src="profile-pic-64x.png" class="avatar"></a>
+                    </div>
+                    <div class="col-4" style="padding-left: 10px;padding-top: 8px">
+                        <div class="media-body">
+                            <h4 id="profileAdSoyad" class="media-heading" style="color:white;"></h4>
+                            <p id="rolName" class="media-heading" style="color:white;"></p>
                             <p id="yetkiliDepolar" class="media-heading" style="color:white;"></p>
-							<button class="button-vue button1vue" onclick="goToLoginPage()">Çıkış</button></td>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                            <button class="button-vue button1vue" onclick="goToLoginPage()">Çıkış</button>
+                            </td>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!--KULLANICI ISLEM-->
 <div id="tag-1" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
@@ -119,7 +120,7 @@
                     <div class="input-group">
                         <label class="label">Rol</label>
                         <div class="rs-select2 js-select-simple select--no-search">
-                            <select name="subject" id="rol">
+                            <select name="subject" id="rol" class="input--style-4">
                                 <option disabled="disabled" selected="selected">Seçiniz</option>
                                 <option value="1">Ana Depo Sorumlusu</option>
                                 <option value="2">Bölüm Sorumlusu</option>
@@ -200,7 +201,7 @@
                         <div class="input-group">
                             <label class="label">Durum</label>
                             <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="subject" id="depo-durum-id">
+                                <select name="subject" id="depo-durum-id" class="input--style-4">
                                     <option disabled="disabled" selected="selected">Seçiniz</option>
                                     <option value="1">Aktif</option>
                                     <option value="2">Pasif</option>
@@ -258,20 +259,22 @@
                 <form method="POST">
                     <div class="row row-space" id="depoYetkiPanel">
                         <div class="col-2">
-                             <div class="input-group">
+                            <div class="input-group">
                                 <label class="label">Kullanıcı</label>
-                                <input id="depoyetki-kullanici-id" type="text" v-model="user1" list="userList1"  @change="getKullaniciList()" placeholder="Seçiniz">
+                                <input id="depoyetki-kullanici-id" type="text" v-model="user1" list="userList1"
+                                       @change="getKullaniciList()" placeholder="Seçiniz">
                                 <datalist id="userList1">
-                                    <option v-for="user1 in userList1">{{user1.id}} ({{user1.adSoyad}}) </option>
+                                    <option v-for="user1 in userList1">{{user1.id}} ({{user1.adSoyad}})</option>
                                 </datalist>
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Depo Kodu</label>
-                                <input id="depoyetki-depokodu-id" type="text" v-model="depo1" list="depoList1"  @change="getDepoList()" placeholder="Seçiniz">
+                                <input id="depoyetki-depokodu-id" type="text" v-model="depo1" list="depoList1"
+                                       @change="getDepoList()" placeholder="Seçiniz">
                                 <datalist id="depoList1">
-                                    <option v-for="depo1 in depoList1">{{depo1.depoKodu}} ({{depo1.depoAdi}}) </option>
+                                    <option v-for="depo1 in depoList1">{{depo1.depoKodu}} ({{depo1.depoAdi}})</option>
                                 </datalist>
                             </div>
                         </div>
@@ -307,7 +310,8 @@
                             <td>{{depoYetki.depoKodu}}</td>
                             <td>{{depoYetki.olusturmaTarihi}}</td>
                             <td>
-                                <button class="button-vue button1vue" v-on:click="depoYetkiSil(depoYetki.id)">Sil</button>
+                                <button class="button-vue button1vue" v-on:click="depoYetkiSil(depoYetki.id)">Sil
+                                </button>
                             </td>
                         </tr>
                         </tbody>
@@ -349,9 +353,11 @@
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Grup Kodu</label>
-                                <input id="grup-kodu-id" type="text" v-model="stokGrup1" list="stokGrupList1"  @change="getStokGrupList()" placeholder="Seçiniz">
+                                <input id="grup-kodu-id" type="text" v-model="stokGrup1" list="stokGrupList1"
+                                       @change="getStokGrupList()" placeholder="Seçiniz">
                                 <datalist id="stokGrupList1">
-                                    <option v-for="stok1 in stokGrupList1">{{stok1.grupKodu}} ({{stok1.grupAdi}}) </option>
+                                    <option v-for="stok1 in stokGrupList1">{{stok1.grupKodu}} ({{stok1.grupAdi}})
+                                    </option>
                                 </datalist>
                             </div>
                         </div>
@@ -360,7 +366,7 @@
                         <div class="input-group">
                             <label class="label">Durum</label>
                             <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="subject" id="stok-durum-id">
+                                <select name="subject" id="stok-durum-id" class="input--style-4">
                                     <option disabled="disabled" selected="selected">Seçiniz</option>
                                     <option value="1">Aktif</option>
                                     <option value="2">Pasif</option>
@@ -415,191 +421,215 @@
 
 <!--DEPO GİRİŞ/ÇIKIŞ İŞLEM-->
 <div id="tag-5" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
-    <div class="row">	&nbsp;</div>
-<div class="row">
-    <div class="col-4">
-        	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp;
-    </div>
-  <div class="col-4">
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="card-body">
-                <h2 class="title">Belge Kayıt Formu</h2>
-                <div class="row row-space" id="belgeKayitForm1">
-                    <div class="col-2">
-                        <div class="input-group">
-                                <label class="label">Depo Kodu</label>
-                                <input id="b-depo-kodu-id" type="text" v-model="depo2" list="depoList2"  @change="getDepoList()" placeholder="Seçiniz">
-                                <datalist id="depoList2">
-                                    <option v-for="depo2 in depoList2">{{depo2.depoKodu}} ({{depo2.depoAdi}}) </option>
-                                </datalist>
+    <div class="row"> &nbsp;</div>
+    <div class="row">
+        <div class="col-4">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
+        <div class="col-4">
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Belge Kayıt Formu</h2>
+                        <div class="row row-space" id="belgeKayitForm1">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Depo Kodu</label>
+                                    <input id="b-depo-kodu-id" type="text" v-model="depo2" list="depoList2"
+                                           @change="getDepoList()" placeholder="Seçiniz">
+                                    <datalist id="depoList2">
+                                        <option v-for="depo2 in depoList2">{{depo2.depoKodu}} ({{depo2.depoAdi}})
+                                        </option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Belge No</label>
+                                    <input class="input--style-4" type="text" name="belge-no" id="b-belge-no-id">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="input-group">
-                            <label class="label">Belge No</label>
-                            <input class="input--style-4" type="text" name="belge-no" id="b-belge-no-id">
+                        <div class="row row-space" id="belgeKayitForm2">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Belge Tarih</label>
+                                    <input class="input--style-2" type="date" name="belge-tarih" id="b-belge-tarih-id">
+                                </div>
+                            </div>
+                            <div class="col-2" id="firma-no-div-id">
+                                <div class="input-group">
+                                    <label class="label">Firma No</label>
+                                    <input id="b-firma-no-id" type="text" v-model="firma" list="firmaList"
+                                           @change="getFirmaList()" placeholder="Seçiniz">
+                                    <datalist id="firmaList">
+                                        <option v-for="firma in firmaList">{{firma.firmaNo}} ({{firma.firmaAdi}})
+                                        </option>
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group" id="tur-div-id">
+                                <label class="label">Tür</label>
+                                <p id="belge-giris-p-id"></p>
+                                <select name="subject" id="belge-tur-id" class="input--style-4">
+                                    <option disabled="disabled" selected="selected">Seçiniz</option>
+                                    <option value="1">Giriş</option>
+                                    <option value="2">Çıkış</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="p-t-15" id="belgeKayitForm">
+                            <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
                         </div>
                     </div>
                 </div>
-                <div class="row row-space">
-                    <div class="col-2">
-                        <div class="input-group">
-                            <label class="label">Belge Tarih</label>
-                            <input class="input--style-2" type="date" name="belge-tarih" id="b-belge-tarih-id">
-                        </div>
-                    </div>
-                    <div class="col-2" id="firma-no-div-id">
-                        <div class="input-group">
-                            <label class="label">Firma No</label>
-                            <input class="input--style-4" type="text" name="firma-no" id="b-firma-no-id">
+            </div>
+            &nbsp;
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="container">
+                        <div id="belgeListele">
+                            <table>
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Depo Kodu</th>
+                                    <th>Belge No</th>
+                                    <th>Firma No</th>
+                                    <th>Belge Tarih</th>
+                                    <th>Tür</th>
+                                    <th>Oluşturma Tarihi</th>
+                                    <th>İşlem</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="belge in belgeList" :key="belge.id">
+                                    <td>{{belge.depoKodu}}</td>
+                                    <td>{{belge.belgeNo}}</td>
+                                    <td>{{belge.firmaNo}}</td>
+                                    <td>{{belge.belgeTarihi}}</td>
+                                    <td>{{belge.tur==1?"Giriş":"Çıkış"}}</td>
+                                    <td>{{belge.olusturmaTarihi}}</td>
+                                    <td>
+                                        <button class="button-vue button1vue" v-on:click="belgeSil(belge.id)">Sil
+                                        </button>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="input-group" id="tur-div-id">
-                    <label class="label">Tür</label>
-                        <select name="subject" id="belge-tur-id">
-                            <option disabled="disabled" selected="selected">Seçiniz</option>
-                            <option value="1">Giriş</option>
-                            <option value="2">Çıkış</option>
-                        </select>
-                     </div>
+            </div>
+        </div>
+
+
+        <div class="col-1">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
+        <div class="col-4">
+            <!-- Belge Detay Kayıt Formu -->
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Belge Detay Kayıt Formu</h2>
+                        <div class="row row-space" id="belgeDetayForm">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Belge No</label>
+                                    <input id="bd-belge-no-id" type="text" v-model="belge1" list="belgeList1"
+                                           @change="getBelgeList()" placeholder="Seçiniz">
+                                    <datalist id="belgeList1">
+                                        <option v-for="belge1 in belgeList1">{{belge1.belgeNo}}</option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Stok Kodu</label>
+                                    <input id="bd-stok-kodu-id" type="text" v-model="stok1" list="stokList1"
+                                           @change="getStokList()" placeholder="Seçiniz">
+                                    <datalist id="stokList1">
+                                        <option v-for="stok1 in stokList1">{{stok1.stokKodu}} ({{stok1.stokAdi}})
+                                        </option>
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Barkod</label>
+                                    <input class="input--style-4" type="text" name="barkod" id="bd-barkod-id">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Adet</label>
+                                    <input class="input--style-4" type="text" name="miktar" id="bd-miktar-id">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Birim Fiyat</label>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <input class="input--style-4" type="text" name="birim-fiyat" id="bd-birim-fiyat-id">
+                                        </div>
+                                         <div class="col-2">
+                                           <p class="input--style-4">TL</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-t-15" id="belgeDetayKayitForm">
+                            <button class="btn btn--radius-2 btn--blue" onclick="ekleBelgeDetay()">Ekle</button>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="p-t-15" id="belgeKayitForm">
+            </div>
+            &nbsp;
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div>
+                        <table>
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Belge No</th>
+                                <th>Stok Kodu</th>
+                                <th>Barkod</th>
+                                <th>Miktar</th>
+                                <th>Birim Fiyat(TL)</th>
+                                <th>Toplam Fiyat(TL)</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody id="belge-detay-form-list-id">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="p-t-15" id="belgeDetayKayitForm2">
                     <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
                 </div>
-                  </div>
-                  </div>
-                  </div>
-                    &nbsp;
-                 <div class="wrapper wrapper--w680">
-                    <div class="card card-4">
-                        <div class="container">
-                            <div id="belgeListele">
-                    <table>
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Depo Kodu</th>
-                            <th>Belge No</th>
-                            <th>Firma No</th>
-                            <th>Belge Tarih</th>
-                            <th>Tür</th>
-                            <th>Oluşturma Tarihi</th>
-                            <th>İşlem</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="belge in belgeList" :key="belge.id">
-                            <td>{{belge.depoKodu}}</td>
-                            <td>{{belge.belgeNo}}</td>
-                            <td>{{belge.firmaNo}}</td>
-                            <td>{{belge.belgeTarihi}}</td>
-                            <td>{{belge.tur==1?"Giriş":"Çıkış"}}</td>
-                            <td>{{belge.olusturmaTarihi}}</td>
-                            <td>
-                                <button class="button-vue button1vue" v-on:click="belgeSil(belge.id)">Sil</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
+            </div>
+        </div>
+        <div class="col-1">
+            &nbsp;
+        </div>
+        <div class="col-4">
 
-
-    <div class="col-1">
-        	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp; 	&nbsp;
+            &nbsp;
+        </div>
     </div>
-    <div class="col-4">
-    <!-- Belge Detay Kayıt Formu -->
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="card-body">
-                <h2 class="title">Belge Detay Kayıt Formu</h2>
-                <div class="row row-space" id ="belgeDetayForm">
-                    <div class="col-2">
-                        <div class="input-group">
-                                <label class="label">Belge No</label>
-                                <input id="bd-belge-no-id" type="text" v-model="belge1" list="belgeList1"  @change="getBelgeList()" placeholder="Seçiniz">
-                                <datalist id="belgeList1">
-                                    <option v-for="belge1 in belgeList1">{{belge1.belgeNo}} (Depo Kodu: {{belge1.depoKodu}}) </option>
-                                </datalist>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="input-group">
-                                <label class="label">Stok Kodu</label>
-                                <input id="bd-stok-kodu-id" type="text" v-model="stok1" list="stokList1"  @change="getStokList()" placeholder="Seçiniz">
-                                <datalist id="stokList1">
-                                    <option v-for="stok1 in stokList1">{{stok1.stokKodu}} ({{stok1.stokAdi}}) </option>
-                                </datalist>
-                        </div>
-                    </div>
-                </div>
-                <div class="row row-space">
-                    <div class="col-2">
-                        <div class="input-group">
-                            <label class="label">Barkod</label>
-                            <input class="input--style-4" type="text" name="barkod" id="bd-barkod-id">
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="input-group">
-                            <label class="label">Miktar</label>
-                            <input class="input--style-4" type="text" name="miktar" id="bd-miktar-id">
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="input-group">
-                            <label class="label">Birim Fiyat</label>
-                            <input class="input--style-4" type="text" name="birim-fiyat" id="bd-birim-fiyat-id">
-                        </div>
-                    </div>
-                </div>
-                <div class="p-t-15" id="belgeDetayKayitForm">
-                    <button class="btn btn--radius-2 btn--blue" onclick="ekleBelgeDetay()">Ekle</button>
-                </div>
-
-                  </div>
-              </div>
-          </div>
-          </div>
-    <div class="col-1">
-        	&nbsp;
-    </div>
-          <div class="col-4">
-              <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-                <div>
-                    <table>
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Belge No</th>
-                            <th>Stok Kodu</th>
-                            <th>Barkod</th>
-                            <th>Miktar</th>
-                            <th>Birim Fiyat</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                        </thead>
-                        <tbody id="belge-detay-form-list-id">
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-        </div>
-                <div class="p-t-15" id="belgeDetayKayitForm2">
-                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
-                    </div>
-        </div>
-              &nbsp;
-        </div>
-        </div>
 
 </div>
 </body>

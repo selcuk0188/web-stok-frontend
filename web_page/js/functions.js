@@ -13,21 +13,25 @@ for (var i = 0; i < navbar.length; i++) {
         this.className += " active";
     });
 }
-
 var userId = getParameterByName('kullaniciId');
-var rolId = getParameterByName('rolId');
 
-if (rolId == '1') {
-   closeTags();
-}
-if (rolId == "2") {
-    document.getElementById('firma-no-div-id').style.display = "none";
-    document.getElementById('tur-div-id').style.display = "none";
-    closeTags();
-}
-if (rolId == "3") {
-    document.getElementById('n5').innerHTML = '';
-    document.getElementById('tag-5').innerHTML = '';
+function loadPage(rolId) {
+
+    if (rolId == '1') {
+        closeTags();
+    }
+    if (rolId == "2") {
+        document.getElementById('firma-no-div-id').style.display = "none";
+        //document.getElementById('tur-div-id').style.display = "none";
+        var doc = document.getElementById("belge-tur-id");
+        doc.remove();
+        document.getElementById("belge-giris-p-id").innerHTML = 'Giriş';
+        closeTags();
+    }
+    if (rolId == "3") {
+        document.getElementById('n5').innerHTML = '';
+        document.getElementById('tag-5').innerHTML = '';
+    }
 }
 
 function goToLoginPage() {
@@ -43,16 +47,17 @@ function setKullaniciField(kullanici) {
 			rolName = "Ana Depo Sorumlusu";
 		else if(kullanici.rolId=='2')
 			rolName = "Bölüm Sorumlusu";
-		else if(kullanici.rolId=='2')
+		else if(kullanici.rolId=='3')
 			rolName = "Admin";
 		rolAdi.innerHTML = rolName;
+		loadPage(kullanici.rolId);
 }
 
 function setKullaniciDepoYetkiField(depolar) {
         var yetkiliDepolar = document.getElementById("yetkiliDepolar");
         var depos="Yetkili Depolar: [";
         for(var i = 0; i < depolar.length ; i++){
-            depos+=depolar[i].depoAdi;
+            depos+=depolar[i].depoKodu + "(" + depolar[i].depoAdi +")";
             if(i==depolar.length-1)
                 depos+="]";
             else
@@ -112,6 +117,11 @@ function showPass() {
     }
 }
 
+function isNumber(str){
+    var regExp = "/^[A-Za-z]+$/";
+   return !(str.match(regExp));
+}
+
 function getParameterByName(name, url = window.location.href) {
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -140,18 +150,28 @@ function ekleBelgeDetay() {
     var xbarkod = document.getElementById("bd-barkod-id").value;
     var xmiktar = document.getElementById("bd-miktar-id").value;
     var xfiyat = document.getElementById("bd-birim-fiyat-id").value;
+    if(xbelgeNo=="" || xstokKodu=="" || xbarkod=="" || xmiktar=="" || xfiyat==""){
+        alert("Boş alan olamaz!");
+        return;
+    }
+    if(!isNumber(xbarkod)){
+        alert("Alanlar sayı olmalıdır!");
+        return;
+    }
+
     var belgeNo = addTr(xbelgeNo.split("(")[0]);
     var stokKodu = addTr(xstokKodu.split("(")[0]);
     var barkod = addTr(xbarkod);
     var miktar = addTr(xmiktar);
     var fiyat = addTr(xfiyat);
-    var td = "<tr>" + belgeNo + stokKodu + barkod + miktar + fiyat + "</tr>";
+    var toplamFiyat = addTr(parseInt(xmiktar) * parseFloat(xfiyat));
+    var td = "<tr>" + belgeNo + stokKodu + barkod + miktar + fiyat + toplamFiyat + "</tr>";
     var doc = document.getElementById("belge-detay-form-list-id");
     doc.innerHTML += td;
 
     var belgeDetay = {
-        belgeNo: Number(xbelgeNo.split("(")[0]),
-        stokKodu: Number(xstokKodu.split("(")[0]),
+        belgeNo: Number(xbelgeNo),
+        stokKodu: xstokKodu.split("(")[0],
         barkod: xbarkod,
         adet: Number(xmiktar),
         birimTutar: parseFloat(xfiyat)
@@ -219,7 +239,6 @@ new Vue({
     },
     mounted: function () {
         this.getUser();
-        this.getKullaniciDepoYetkiList();
         axios
             .post(url + '/kullanici/listele')
             .then(response => {
@@ -250,14 +269,15 @@ new Vue({
             axios
                 .post(url + '/kullanici/id?kullaniciId=' + userId)
                 .then(response => {
+                    this.getKullaniciDepoYetkiList(response.data.kullanici.rolId);
                     setKullaniciField(response.data.kullanici);
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
         },
-        getKullaniciDepoYetkiList: function () {
-            if (rolId == 2) {
+        getKullaniciDepoYetkiList: function (rolId) {
+            if (rolId == "2") {
                 axios
                     .post(url + '/depo-yetki/listele/kullanici?kullaniciId=' + userId)
                     .then(response => {
@@ -267,7 +287,7 @@ new Vue({
                         console.log(error);
                     })
             }
-            if (rolId == 1) {
+            if (rolId == "1") {
                 axios
                     .post(url + '/depo/listele?durum=1')
                     .then(response => {
@@ -277,9 +297,6 @@ new Vue({
                         console.log(error);
                     })
             }
-        },
-        convertHistory: function (hist) {
-            convertHistory(hist);
         }
     }
 })
@@ -411,11 +428,7 @@ new Vue({
                 .catch(function (error) {
                     console.log(error);
                 })
-        },
-        convertHistory: function (hist) {
-            convertHistory(hist);
         }
-
     }
 })
 
@@ -566,23 +579,28 @@ new Vue({
         save: function () {
             if (document.getElementById("b-depo-kodu-id").value == null ||
                 document.getElementById("b-belge-no-id").value == null ||
-                document.getElementById("b-firma-no-id").value == null ||
-                document.getElementById("b-belge-tarih-id").value == null ||
-                document.getElementById("belge-tur-id").value == null
+                document.getElementById("b-belge-tarih-id").value == null
             ) {
                 alert("Herhangi bir alan Boş olamaz!!!");
             } else {
                 var depoKodu = document.getElementById("b-depo-kodu-id").value;
                 var belgeNo = document.getElementById("b-belge-no-id").value;
                 var firmaNo = document.getElementById("b-firma-no-id").value;
+                var s_firmaNo = null;
+                if(document.getElementById("b-firma-no-id")!=null)
+                    s_firmaNo = parseInt(firmaNo.split("(")[0]);
                 var belgeTarih = document.getElementById("b-belge-tarih-id").value;
-                var belgeTur = document.getElementById("belge-tur-id").value;
+                var belgeTur;
+                if(document.getElementById("belge-tur-id")==null)
+                    belgeTur = "1";
+               else
+                    belgeTur = document.getElementById("belge-tur-id").value;
                 var s_depoKodu = parseInt(depoKodu.split("(")[0]);
                 axios
                     .post(url + '/belge/kayit', {
                         depoKodu: s_depoKodu,
                         belgeNo: belgeNo,
-                        firmaNo: firmaNo,
+                        firmaNo: s_firmaNo,
                         belgeTarihi: belgeTarih,
                         tur: Number(belgeTur)
                     })
@@ -593,6 +611,7 @@ new Vue({
                         console.log("hata alindi");
                     })
             }
+            location.reload();
         }
     }
 })
@@ -633,6 +652,10 @@ new Vue({
     }
 })
 
+var rolID = 0;
+function setRolId(p_rolID){
+    rolID = p_rolID.rolId;
+}
 new Vue({
     el: "#belgeKayitForm1",
     data() {
@@ -641,14 +664,60 @@ new Vue({
         }
     },
     mounted: function () {
-    this.getDepoList();
+        this.getDepoList();
     },
     methods: {
         getDepoList: function () {
             axios
-                .post(url + '/depo-yetki/listele/kullanici?kullaniciId='+kullaniciId)
+                .post(url + '/kullanici/id?kullaniciId=' + userId)
+                .then(response => {
+                    setRolId(response.data.kullanici);
+                    this.getDepoList2();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        getDepoList2: function () {
+            if(rolID==2) {
+                axios
+                    .post(url + '/depo-yetki/listele/kullanici?kullaniciId=' + userId)
+                    .then(response => {
+                        this.depoList2 = response.data.kullaniciDepoYetkiList;
+                    })
+                    .catch(function (error) {
+                        console.log("hata alindi");
+                    })
+            }
+            else{
+                axios
+                    .post(url + '/depo/listele?durum=1')
+                    .then(response => {
+                        this.depoList2 = response.data.depoList;
+                    })
+                    .catch(function (error) {
+                        console.log("hata alindi");
+                    })
+              }
+          }
+        }
+})
+new Vue({
+    el: "#belgeKayitForm2",
+    data() {
+        return {
+            firmaList: []
+        }
+    },
+    mounted: function () {
+        this.getFirmaList();
+    },
+    methods: {
+        getFirmaList: function () {
+            axios
+                .post(url + '/firma/listele')
             .then(response => {
-                this.depoList2 = response.data.kullaniciDepoYetkiList;
+                this.firmaList = response.data.firmaList;
             })
             .catch(function (error) {
                 console.log("hata alindi");
@@ -665,12 +734,7 @@ new Vue({
     },
     methods: {
         save: function () {
-            if (document.getElementById("b-depo-kodu-id").value == null ||
-                document.getElementById("b-belge-no-id").value == null ||
-                document.getElementById("b-firma-no-id").value == null ||
-                document.getElementById("b-belge-tarih-id").value == null ||
-                document.getElementById("belge-tur-id").value == null
-            ) {
+            if (false) {
                 alert("Herhangi bir alan Boş olamaz!!!");
             } else {
                 axios
@@ -683,6 +747,7 @@ new Vue({
                     .catch(function (error) {
                         console.log("hata alindi");
                     })
+                location.reload();
             }
         }
     }
