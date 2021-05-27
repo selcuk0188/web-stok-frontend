@@ -46,7 +46,8 @@
         <li id="n2" onclick="open_tag_2()"><a href='#'>Depo İşlem</a></li>
         <li id="n3" onclick="open_tag_3()"><a href='#'>Kullanıcı Depo Yetkinlendirme</a></li>
         <li id="n4" onclick="open_tag_4()"><a href='#'>Stok Kart İşlem</a></li>
-        <li id="n5" onclick="open_tag_5()"><a href='#'>Depo Giriş İşlem</a></li>
+        <li id="n5" onclick="open_tag_5()"><a href='#'>Depo Giriş/Çıkış İşlem</a></li>
+        <li id="n6" onclick="open_tag_6()"><a href='#'>Depo İşlem Listeme</a></li>
     </ul>
 </div>
 <div class="row" style="height: 110px;width:2200px;background-color: rgb(128, 139, 150);">
@@ -539,7 +540,7 @@
                             <div class="input-group" id="tur-div-id">
                                 <label class="label">Tür</label>
                                 <p id="belge-giris-p-id"></p>
-                                <select name="subject" id="belge-tur-id" class="input--style-4">
+                                <select name="subject" id="belge-tur-id" class="input--style-4" onchange="girisClick()">
                                     <option disabled="disabled" selected="selected">Seçiniz</option>
                                     <option value="1">Giriş</option>
                                     <option value="2">Çıkış</option>
@@ -553,42 +554,7 @@
                 </div>
             </div>
             &nbsp;
-            <div class="wrapper wrapper--w680">
-                <div class="card card-4">
-                    <div class="container">
-                        <div id="belgeListele">
-                            <div class="scrollit">
-                                <table>
-                                    <thead class="thead-dark">
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th>Depo Kodu</th>
-                                        <th>Belge No</th>
-                                        <th>Firma No</th>
-                                        <th>Belge Tarih</th>
-                                        <th>Tür</th>
-                                        <th>Oluşturma Tarihi</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr v-for="belge in belgeList" :key="belge.id">
-                                        <td>&nbsp;</td>
-                                        <td>{{belge.depoKodu}}</td>
-                                        <td>{{belge.belgeNo}}</td>
-                                        <td>{{belge.firmaNo}}</td>
-                                        <td>{{belge.belgeTarihi}}</td>
-                                        <td>{{belge.tur==1?"Giriş":"Çıkış"}}</td>
-                                        <td>{{belge.olusturmaTarihi}}</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
 
@@ -655,8 +621,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-t-15" id="belgeDetayKayitForm">
-                            <button class="btn btn--radius-2 btn--blue" onclick="ekleBelgeDetay()">Ekle</button>
+                        <div class="p-t-15" id="belgeDetayKayitForm"> <!--onclick="ekleBelgeDetay()"-->
+                            <button class="btn btn--radius-2 btn--blue" v-on:click="addData()">Ekle</button>
                         </div>
 
                     </div>
@@ -695,6 +661,59 @@
         <div class="col-1">
             &nbsp;&nbsp;&nbsp;&nbsp;
         </div>
+    </div>
+</div>
+<div id="tag-6" class="page-wrapper p-t-230 p-b-100 font-poppins"
+     style="background-color: #808B96;width:2200px;">
+    <div class="row">&nbsp;&nbsp;</div>
+    <div class="row">
+        <div class="col-4">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
+        <div class="col-4">
+            <div class="wrapper wrapper--w980">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Belge Listesi</h2>
+                        <div class="row row-space" id="belgeListele">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="scrollit2">
+                                        <table>
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th>Depo Kodu</th>
+                                                <th>Belge No</th>
+                                                <th>Firma No</th>
+                                                <th>Belge Tarih</th>
+                                                <th>Tür</th>
+                                                <th>Oluşturma Tarihi</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="belge in belgeList" :key="belge.id">
+                                                <td>&nbsp;</td>
+                                                <td>{{belge.depoKodu}}</td>
+                                                <td>{{belge.belgeNo}}</td>
+                                                <td>{{belge.firmaNo}}</td>
+                                                <td>{{belge.belgeTarihi}}</td>
+                                                <td>{{belge.tur==1?"Giriş":"Çıkış"}}</td>
+                                                <td>{{belge.olusturmaTarihi}}</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        &nbsp; &nbsp;
         <div class="col-4">
             <div class="wrapper wrapper--w980">
                 <div class="card card-4">
@@ -703,7 +722,7 @@
                         <div class="row row-space" id="belgeDetayListele">
                             <div class="col-12">
                                 <div class="input-group">
-                                    <div class="scrollit">
+                                    <div class="scrollit2">
                                         <table>
                                             <thead class="thead-dark">
                                             <tr>
@@ -737,10 +756,50 @@
                     </div>
                 </div>
             </div>
-            &nbsp;
+        </div>
+        &nbsp; &nbsp;
+        <div class="col-4">
+            <div class="wrapper wrapper--w980">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Depo Stok Listesi</h2>
+                        <div class="row row-space" id="depoStokListesi">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="scrollit2">
+                                        <table>
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th>Depo Kodu</th>
+                                                <th>Depo Adi</th>
+                                                <th>Stok Kodu</th>
+                                                <th>Stok Adı</th>
+                                                <th>Stok Grup Adı</th>
+                                                <th>Adet</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="depoStok in depoStokList" :key="depoStok.id">
+                                                <td>{{depoStok.depoKodu}}</td>
+                                                <td>{{depoStok.depoAdi}}</td>
+                                                <td>{{depoStok.stokKodu}}</td>
+                                                <td>{{depoStok.stokAdi}}</td>
+                                                <td>{{depoStok.stokGrupAdi}}</td>
+                                                <td>{{depoStok.adet}}</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
 </body>
 <script src="js/main.js"></script>

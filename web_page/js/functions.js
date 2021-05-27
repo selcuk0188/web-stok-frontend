@@ -14,8 +14,58 @@ for (var i = 0; i < navbar.length; i++) {
     });
 }
 var userId = getParameterByName('kullaniciId');
-
+var depoStokGlobal = [];
+document.getElementById("bd-barkod-id").readOnly = true;
 document.getElementById('belgeDetayKayitForm2').style.display = "none";
+
+function girisClick() {
+    if (document.getElementById('belge-tur-id') != null && document.getElementById('belge-tur-id').value == "2") {
+        document.getElementById('firma-no-div-id').style.display = "none";
+    } else {
+        document.getElementById('firma-no-div-id').style.display = "block";
+    }
+}
+
+function validateDetayEkle(data) {
+    var i;
+    var p_sk = document.getElementById('bd-stok-kodu-id').value;
+    var g_sk = Number(p_sk.split("(")[0]);
+    var p_adet = document.getElementById('bd-miktar-id').value;
+    var g_adet = Number(p_adet);
+    for (i = 0; i < depoStokGlobal.length; i++) {
+        var dk = depoStokGlobal[i].depoKodu;
+        var sk = depoStokGlobal[i].stokKodu;
+        if (data.tur == 2 && data.depoKodu == dk && g_sk == sk) {
+            if (depoStokGlobal[i].adet - g_adet >= 0) {
+                continue;
+            } else {
+                alert("Stokta yeterli adet mevcut değildir!");
+                return;
+            }
+        }
+    }
+    ekleBelgeDetay();
+}
+
+function setDepoStokGlobal(depoStokGlobalList) {
+    depoStokGlobal = depoStokGlobalList;
+}
+
+function changeStokGrup(val) {
+    if (document.getElementById('bd-stok-kodu-id') != null) {
+        var stokKodu = document.getElementById('bd-stok-kodu-id').value;
+        var intsk = parseInt(stokKodu);
+        var barkod = "";
+        var i = 0;
+        for (i = 0; i < val.length; i++) {
+            if (val[i].stokKodu == intsk) {
+                barkod = val[i].barkod;
+            }
+        }
+        document.getElementById('bd-barkod-id').value = barkod;
+    }
+}
+
 
 function loadPage(rolId) {
 
@@ -27,7 +77,7 @@ function loadPage(rolId) {
         //document.getElementById('tur-div-id').style.display = "none";
         var doc = document.getElementById("belge-tur-id");
         doc.remove();
-        document.getElementById("belge-giris-p-id").innerHTML = 'Giriş';
+        document.getElementById("belge-giris-p-id").innerHTML = 'Çıkış';
         closeTags();
     }
     if (rolId == "3") {
@@ -96,9 +146,13 @@ function open_tag_5() {
     open("tag-5");
 }
 
+function open_tag_6() {
+    open("tag-6");
+}
+
 function open(param) {
 
-    for (var i = 1; i < 6; i++) {
+    for (var i = 1; i < 7; i++) {
         var str = "tag-" + i;
         var doc = document.getElementById(str);
         if (param == str) {
@@ -496,7 +550,7 @@ new Vue({
                 var s_grupKodu = parseInt(grupKodu.split("(")[0]);
                 axios
                     .post(url + '/stok-kart/kayit', {
-                        stokKodu: stokKodu,
+                        stokKodu: Number(stokKodu),
                         stokAdi: stokAdi,
                         barkod: barkodAdi,
                         grupKodu: Number(s_grupKodu),
@@ -596,7 +650,7 @@ new Vue({
                 var belgeTarih = document.getElementById("b-belge-tarih-id").value;
                 var belgeTur;
                 if (document.getElementById("belge-tur-id") == null)
-                    belgeTur = "1";
+                    belgeTur = "2";
                 else
                     belgeTur = document.getElementById("belge-tur-id").value;
                 var s_depoKodu = parseInt(depoKodu.split("(")[0]);
@@ -748,6 +802,27 @@ new Vue({
     }
 })
 
+new Vue({
+    el: "#belgeDetayKayitForm",
+    mounted: function () {
+    },
+    methods: {
+        addData: function () {
+            if (document.getElementById("bd-belge-no-id") != null) {
+                var belgeNo = document.getElementById("bd-belge-no-id").value;
+                axios
+                    .post(url + '/belge/listele/belge-no?belgeNo=' + belgeNo)
+                    .then(response => {
+                        validateDetayEkle(response.data.belge);
+                    })
+                    .catch(function (error) {
+                        console.log("hata alindi");
+                    })
+            }
+        }
+    }
+})
+
 
 new Vue({
     el: "#belgeDetayListele",
@@ -798,6 +873,7 @@ new Vue({
                 .post(url + '/stok-kart/listele?durum=1')
                 .then(response => {
                     this.stokList1 = response.data.stokKartList;
+                    changeStokGrup(response.data.stokKartList);
                 })
                 .catch(function (error) {
                     console.log("hata alindi");
@@ -808,6 +884,32 @@ new Vue({
                 .post(url + '/belge/listele?kullaniciId=' + userId)
                 .then(response => {
                     this.belgeList1 = response.data.belgeList;
+                })
+                .catch(function (error) {
+                    console.log("hata alindi");
+                })
+        }
+    }
+})
+
+
+new Vue({
+    el: "#depoStokListesi",
+    data() {
+        return {
+            depoStokList: []
+        }
+    },
+    mounted: function () {
+        this.getDepoStokList();
+    },
+    methods: {
+        getDepoStokList: function () {
+            axios
+                .post(url + '/depo/listele/stok/kullanici?kullaniciId=' + userId)
+                .then(response => {
+                    this.depoStokList = response.data.depoStokDtoList;
+                    setDepoStokGlobal(response.data.depoStokDtoList);
                 })
                 .catch(function (error) {
                     console.log("hata alindi");
