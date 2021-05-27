@@ -192,7 +192,8 @@ function convertHistory(hist) {
     return hist;
 }
 
-var url = "http://localhost:8081/stok-yonetim";
+//var url = "http://localhost:8081/stok-yonetim";
+var url = "http://ec2-18-156-136-177.eu-central-1.compute.amazonaws.com:8081/stok-yonetim";
 
 // ---------------------------------------- KULLANICI İSLEM ---------------------------------------- //
 new Vue({
@@ -222,7 +223,7 @@ new Vue({
                         rolId: Number(rol)
                     })
                     .then(response => {
-                        alert("Kullanıcı Başarıyla Kydedilmiştir.");
+                        alert("Kayıt Başarıyla Kaydedilmiştir.");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
@@ -326,7 +327,7 @@ new Vue({
                         depoDurum: parseInt(depoDurum) //aktif
                     })
                     .then(response => {
-                        alert("Kullanıcı Başarıyla Kydedilmiştir.");
+                        alert("Kayıt Başarıyla Kaydedilmiştir.");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
@@ -393,7 +394,7 @@ new Vue({
                         depoKodu: s_depoKodu
                     })
                     .then(response => {
-                        alert("Kullanıcı Başarıyla Kydedilmiştir.");
+                        alert("Kayıt Başarıyla Kaydedilmiştir.");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
@@ -502,7 +503,7 @@ new Vue({
                         durum: Number(stokDurum)
                     })
                     .then(response => {
-                        alert("Kullanıcı Başarıyla Kaydedilmiştir.");
+                        alert("Kayıt Başarıyla Kaydedilmiştir.");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
@@ -608,7 +609,7 @@ new Vue({
                         tur: Number(belgeTur)
                     })
                     .then(response => {
-                        alert("Kullanıcı Başarıyla Kaydedilmiştir.");
+                        alert("Kayıt Başarıyla Kaydedilmiştir.");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
@@ -736,7 +737,7 @@ new Vue({
                         belgeDetayList: belgeDetayArray
                     })
                     .then(response => {
-                        alert("Kullanıcı Başarıyla Kaydedilmiştir.");
+                        alert("Kayıt Başarıyla Kaydedilmiştir.");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
@@ -804,7 +805,7 @@ new Vue({
         },
         getBelgeList: function () {
             axios
-                .post(url + '/belge/listele')
+                .post(url + '/belge/listele?kullaniciId=' + userId)
                 .then(response => {
                     this.belgeList1 = response.data.belgeList;
                 })

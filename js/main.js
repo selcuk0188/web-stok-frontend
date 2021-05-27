@@ -12,7 +12,8 @@
         //const axios = require('axios').default;
         var kullaniciAdi = $(input[0]).val(); // kullaniciAdi
         var sifre = $(input[1]).val(); // sifre
-        var url = "http://localhost:8081/stok-yonetim/kullanici";
+        //var url = "http://localhost:8081/stok-yonetim/kullanici";
+        var url = "http://ec2-18-156-136-177.eu-central-1.compute.amazonaws.com:8081/stok-yonetim/kullanici";
         const endPoint = url + "/login?kullaniciAdi=" + kullaniciAdi + "&sifre=" + sifre;
         e.preventDefault();
         $.when(

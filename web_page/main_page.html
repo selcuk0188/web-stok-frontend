@@ -49,7 +49,7 @@
         <li id="n5" onclick="open_tag_5()"><a href='#'>Depo Giriş İşlem</a></li>
     </ul>
 </div>
-<div class="row" style="height: 110px;width:3000px;background-color: rgb(128, 139, 150);">
+<div class="row" style="height: 110px;width:2200px;background-color: rgb(128, 139, 150);">
     <div class="col-12">
         <div class="well well-sm">
             <div class="media">
@@ -292,7 +292,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Kullanıcı</label>
-                                        <input id="depoyetki-kullanici-id" type="text" v-model="user1" list="userList1"
+                                        <input id="depoyetki-kullanici-id" type="text" v-model="user1"  autocomplete="off"  list="userList1"
                                                @change="getKullaniciList()" placeholder="Seçiniz">
                                         <datalist id="userList1">
                                             <option v-for="user1 in userList1">{{user1.id}} ({{user1.adSoyad}})</option>
@@ -302,7 +302,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Depo Kodu</label>
-                                        <input id="depoyetki-depokodu-id" type="text" v-model="depo1" list="depoList1"
+                                        <input id="depoyetki-depokodu-id" type="text" v-model="depo1"  autocomplete="off"  list="depoList1"
                                                @change="getDepoList()" placeholder="Seçiniz">
                                         <datalist id="depoList1">
                                             <option v-for="depo1 in depoList1">{{depo1.depoKodu}} ({{depo1.depoAdi}})
@@ -398,7 +398,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Grup Kodu</label>
-                                        <input id="grup-kodu-id" type="text" v-model="stokGrup1" list="stokGrupList1"
+                                        <input id="grup-kodu-id" type="text" v-model="stokGrup1"  autocomplete="off"  list="stokGrupList1"
                                                @change="getStokGrupList()" placeholder="Seçiniz">
                                         <datalist id="stokGrupList1">
                                             <option v-for="stok1 in stokGrupList1">{{stok1.grupKodu}}
@@ -473,7 +473,7 @@
 </div>
 
 <!--DEPO GİRİŞ/ÇIKIŞ İŞLEM-->
-<div id="tag-5" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
+<div id="tag-5" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;width:2200px;">
     <div class="row"> &nbsp;</div>
     <div class="row">
         <div class="col-4">
@@ -488,7 +488,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Depo Kodu</label>
-                                    <input id="b-depo-kodu-id" type="text" v-model="depo2" list="depoList2"
+                                    <input id="b-depo-kodu-id" type="text" autocomplete="off" v-model="depo2" list="depoList2"
                                            @change="getDepoList()" placeholder="Seçiniz">
                                     <datalist id="depoList2">
                                         <option v-for="depo2 in depoList2">{{depo2.depoKodu}} ({{depo2.depoAdi}})
@@ -591,7 +591,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Belge No</label>
-                                    <input id="bd-belge-no-id" type="text" v-model="belge1" list="belgeList1"
+                                    <input id="bd-belge-no-id" type="text" v-model="belge1"  autocomplete="off"  list="belgeList1"
                                            @change="getBelgeList()" placeholder="Seçiniz">
                                     <datalist id="belgeList1">
                                         <option v-for="belge1 in belgeList1">{{belge1.belgeNo}}</option>
@@ -601,7 +601,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Stok Kodu</label>
-                                    <input id="bd-stok-kodu-id" type="text" v-model="stok1" list="stokList1"
+                                    <input id="bd-stok-kodu-id" type="text" v-model="stok1"  autocomplete="off"  list="stokList1"
                                            @change="getStokList()" placeholder="Seçiniz">
                                     <datalist id="stokList1">
                                         <option v-for="stok1 in stokList1">{{stok1.stokKodu}} ({{stok1.stokAdi}})
