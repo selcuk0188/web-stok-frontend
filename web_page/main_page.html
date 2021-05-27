@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Stok Ekranı</title>
     <meta charset="UTF-8">
@@ -75,166 +75,200 @@
 </div>
 <!--KULLANICI ISLEM-->
 <div id="tag-1" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="card-body">
-                <h2 class="title">Kullanıcı Kayıt Formu</h2>
-                <form method="POST">
-                    <div class="row row-space">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Ad</label>
-                                <input class="input--style-4" type="text" name="first_name" id="first_name">
+    <div class="row">
+        <div class="col-4">
+            &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
+        <div class="col-4">
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Kullanıcı Kayıt</h2>
+                        <form method="POST">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Ad</label>
+                                        <input class="input--style-4" type="text" name="first_name" id="first_name">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Soyad</label>
+                                        <input class="input--style-4" type="text" name="last_name" id="last_name">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Soyad</label>
-                                <input class="input--style-4" type="text" name="last_name" id="last_name">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">TCKN</label>
+                                        <input class="input--style-4" type="text" name="tckn" id="tckn">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row row-space">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">TCKN</label>
-                                <input class="input--style-4" type="text" name="tckn" id="tckn">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Kullanıcı Adı</label>
+                                        <input class="input--style-4" type="text" name="kullanici_adi"
+                                               id="kullanici_adi">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Şifre <i class="fa fa-eye" aria-hidden="true"
+                                                                      onclick="showPass()"></i></label>
+                                        <input id="passId" class="input--style-4" type="password" name="pass">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row row-space">
-                        <div class="col-2">
                             <div class="input-group">
-                                <label class="label">Kullanıcı Adı</label>
-                                <input class="input--style-4" type="text" name="kullanici_adi" id="kullanici_adi">
+                                <label class="label">Rol</label>
+                                <div class="rs-select2 js-select-simple select--no-search">
+                                    <select name="subject" id="rol" class="input--style-4">
+                                        <option disabled="disabled" selected="selected">Seçiniz</option>
+                                        <option value="1">Ana Depo Sorumlusu</option>
+                                        <option value="2">Bölüm Sorumlusu</option>
+                                        <option value="3">Admin</option>
+                                    </select>
+                                    <div class="select-dropdown"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Şifre <i class="fa fa-eye" aria-hidden="true"
-                                                              onclick="showPass()"></i></label>
-                                <input id="passId" class="input--style-4" type="password" name="pass">
+                            <div class="p-t-15" id="kullaniciKayitForm">
+                                <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <div class="input-group">
-                        <label class="label">Rol</label>
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select name="subject" id="rol" class="input--style-4">
-                                <option disabled="disabled" selected="selected">Seçiniz</option>
-                                <option value="1">Ana Depo Sorumlusu</option>
-                                <option value="2">Bölüm Sorumlusu</option>
-                                <option value="3">Admin</option>
-                            </select>
-                            <div class="select-dropdown"></div>
-                        </div>
-                    </div>
-                    <div class="p-t-15" id="kullaniciKayitForm">
-                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-    &nbsp;
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="container">
-                <div id="kullaniciListele">
-                    <table>
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Kullanıcı ID</th>
-                            <th>TCKN</th>
-                            <th>Rol</th>
-                            <th>Adı Soyadı</th>
-                            <th>Kullanıcı Adı</th>
-                            <th>Şifre</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="kullanici in kullaniciList" :key="kullanici.id">
-                            <td>{{kullanici.id}}</td>
-                            <td>{{kullanici.tcNo}}</td>
-                            <td>{{getRolName(kullanici.rolId)}}</td>
-                            <td>{{kullanici.adSoyad}}</td>
-                            <td>{{kullanici.kullaniciAdi}}</td>
-                            <td>{{kullanici.sifre}}<i class="fa fa-eye" aria-hidden="true" onclick="showPass()"></i>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        <div class="col-6">
+            <div class="wrapper wrapper--w860">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Kullanıcı Listesi</h2>
+                        <div class="row row-space">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div id="kullaniciListele">
+                                        <table>
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th>Kullanıcı ID</th>
+                                                <th>TCKN</th>
+                                                <th>Rol</th>
+                                                <th>Adı Soyadı</th>
+                                                <th>Kullanıcı Adı</th>
+                                                <th>Şifre</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="kullanici in kullaniciList" :key="kullanici.id">
+                                                <td>{{kullanici.id}}</td>
+                                                <td>{{kullanici.tcNo}}</td>
+                                                <td>{{getRolName(kullanici.rolId)}}</td>
+                                                <td>{{kullanici.adSoyad}}</td>
+                                                <td>{{kullanici.kullaniciAdi}}</td>
+                                                <td>{{kullanici.sifre}}<i class="fa fa-eye" aria-hidden="true"
+                                                                          onclick="showPass()"></i>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-
 <!--DEPO ISLEM-->
 <div id="tag-2" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="card-body">
-                <h2 class="title">Depo İşlem</h2>
-                <form method="POST">
-                    <div class="row row-space" id="depo-kayit-panel-1">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Depo Adı</label>
-                                <input class="input--style-4" type="text" name="depo-adi" id="depo-adi-id">
+    <div class="row">
+        <div class="col-4">
+            &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
+        <div class="col-4">
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Depo Kayıt</h2>
+                        <form method="POST">
+                            <div class="row row-space" id="depo-kayit-panel-1">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Depo Adı</label>
+                                        <input class="input--style-4" type="text" name="depo-adi" id="depo-adi-id">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Depo Kodu</label>
+                                        <input class="input--style-4" type="text" name="depo-kodu" id="depo-kodu-id">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Depo Kodu</label>
-                                <input class="input--style-4" type="text" name="depo-kodu" id="depo-kodu-id">
+                            <div class="row row-space" id="depo-kayit-panel-2">
+                                <div class="input-group">
+                                    <label class="label">Durum</label>
+                                    <div class="rs-select2 js-select-simple select--no-search">
+                                        <select name="subject" id="depo-durum-id" class="input--style-4">
+                                            <option disabled="disabled" selected="selected">Seçiniz</option>
+                                            <option value="1">Aktif</option>
+                                            <option value="2">Pasif</option>
+                                        </select>
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row row-space" id="depo-kayit-panel-2">
-                        <div class="input-group">
-                            <label class="label">Durum</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="subject" id="depo-durum-id" class="input--style-4">
-                                    <option disabled="disabled" selected="selected">Seçiniz</option>
-                                    <option value="1">Aktif</option>
-                                    <option value="2">Pasif</option>
-                                </select>
-                                <div class="select-dropdown"></div>
+                            <div class="p-t-15" id="depoKayitForm">
+                                <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <div class="p-t-15" id="depoKayitForm">
-                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-    &nbsp;
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="container">
-                <div id="depoListele">
-                    <table>
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Depo Adı</th>
-                            <th>Depo Kodu</th>
-                            <th>Durum</th>
-                            <th>Oluşturma Tarihi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="depo in depoList" :key="depo.id">
-                            <td>{{depo.depoAdi}}</td>
-                            <td>{{depo.depoKodu}}</td>
-                            <td>{{depo.durum==1?"Aktif":"Pasif"}}</td>
-                            <td>{{depo.olusturmaTarihi}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        <div class="col-6">
+            <div class="wrapper wrapper--w960">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Depo Listesi</h2>
+                        <div class="row row-space">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div id="depoListele">
+                                        <table>
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th>Depo Adı</th>
+                                                <th>Depo Kodu</th>
+                                                <th>Durum</th>
+                                                <th>Oluşturma Tarihi</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="depo in depoList" :key="depo.id">
+                                                <td>{{depo.depoAdi}}</td>
+                                                <td>{{depo.depoKodu}}</td>
+                                                <td>{{depo.durum==1?"Aktif":"Pasif"}}</td>
+                                                <td>{{depo.olusturmaTarihi}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -243,65 +277,84 @@
 
 <!--KULLANICI DEPO YETKILENDIRME-->
 <div id="tag-3" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="card-body">
-                <h2 class="title">Kullanıcı Depo Yetkilendirme</h2>
-                <form method="POST">
-                    <div class="row row-space" id="depoYetkiPanel">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Kullanıcı</label>
-                                <input id="depoyetki-kullanici-id" type="text" v-model="user1" list="userList1"
-                                       @change="getKullaniciList()" placeholder="Seçiniz">
-                                <datalist id="userList1">
-                                    <option v-for="user1 in userList1">{{user1.id}} ({{user1.adSoyad}})</option>
-                                </datalist>
+    <div class="row">
+        <div class="col-4">
+            &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
+        <div class="col-4">
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Kullanıcı Depo Yetkilendirme</h2>
+                        <form method="POST">
+                            <div class="row row-space" id="depoYetkiPanel">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Kullanıcı</label>
+                                        <input id="depoyetki-kullanici-id" type="text" v-model="user1" list="userList1"
+                                               @change="getKullaniciList()" placeholder="Seçiniz">
+                                        <datalist id="userList1">
+                                            <option v-for="user1 in userList1">{{user1.id}} ({{user1.adSoyad}})</option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Depo Kodu</label>
+                                        <input id="depoyetki-depokodu-id" type="text" v-model="depo1" list="depoList1"
+                                               @change="getDepoList()" placeholder="Seçiniz">
+                                        <datalist id="depoList1">
+                                            <option v-for="depo1 in depoList1">{{depo1.depoKodu}} ({{depo1.depoAdi}})
+                                            </option>
+                                        </datalist>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Depo Kodu</label>
-                                <input id="depoyetki-depokodu-id" type="text" v-model="depo1" list="depoList1"
-                                       @change="getDepoList()" placeholder="Seçiniz">
-                                <datalist id="depoList1">
-                                    <option v-for="depo1 in depoList1">{{depo1.depoKodu}} ({{depo1.depoAdi}})</option>
-                                </datalist>
+                            <div class="p-t-15" id="depoYetkilendirmeKayitForm">
+                                <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <div class="p-t-15" id="depoYetkilendirmeKayitForm">
-                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-    &nbsp;
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="container">
-                <div id="depoYetkilendirmeListele">
-                    <table>
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Kullanıcı ID</th>
-                            <th>Kullanıcı Ad Soyad</th>
-                            <th>Depo Adı</th>
-                            <th>Depo Kodu</th>
-                            <th>Oluşturma tarihi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="depoYetki in depoYetkiList" :key="depoYetki.id">
-                            <td>{{depoYetki.kullaniciId}}</td>
-                            <td>{{depoYetki.kullaniciAdiSoyad}}</td>
-                            <td>{{depoYetki.depoAdi}}</td>
-                            <td>{{depoYetki.depoKodu}}</td>
-                            <td>{{depoYetki.olusturmaTarihi}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+        &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        <div class="col-6">
+            <div class="wrapper wrapper--w960">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Kullanıcı Depo Yetki Listesi</h2>
+                        <div class="row row-space">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div id="depoYetkilendirmeListele">
+                                        <table>
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th>Kullanıcı ID</th>
+                                                <th>Kullanıcı Ad Soyad</th>
+                                                <th>Depo Adı</th>
+                                                <th>Depo Kodu</th>
+                                                <th>Oluşturma tarihi</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="depoYetki in depoYetkiList" :key="depoYetki.id">
+                                                <td>{{depoYetki.kullaniciId}}</td>
+                                                <td>{{depoYetki.kullaniciAdiSoyad}}</td>
+                                                <td>{{depoYetki.depoAdi}}</td>
+                                                <td>{{depoYetki.depoKodu}}</td>
+                                                <td>{{depoYetki.olusturmaTarihi}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -310,91 +363,109 @@
 
 <!--STOK KART ISLEM-->
 <div id="tag-4" class="page-wrapper p-t-230 p-b-100 font-poppins" style="background-color: #808B96;">
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="card-body">
-                <h2 class="title">Stok Kart İşlem</h2>
-                <form method="POST">
-                    <div class="row row-space" id="stok-kart-panel-1">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Stok Kodu</label>
-                                <input class="input--style-4" type="text" name="stok-kodu" id="stok-kodu-id">
+    <div class="row">
+        <div class="col-4">
+            &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
+        <div class="col-4">
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Stok Kart Kayıt</h2>
+                        <form method="POST">
+                            <div class="row row-space" id="stok-kart-panel-1">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Stok Kodu</label>
+                                        <input class="input--style-4" type="text" name="stok-kodu" id="stok-kodu-id">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Stok Adı</label>
+                                        <input class="input--style-4" type="text" name="stok-adi" id="stok-adi-id">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Stok Adı</label>
-                                <input class="input--style-4" type="text" name="stok-adi" id="stok-adi-id">
+                            <div class="row row-space" id="stokKartPanel2">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Barkod</label>
+                                        <input class="input--style-4" type="text" name="barkod" id="barkod-id">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Grup Kodu</label>
+                                        <input id="grup-kodu-id" type="text" v-model="stokGrup1" list="stokGrupList1"
+                                               @change="getStokGrupList()" placeholder="Seçiniz">
+                                        <datalist id="stokGrupList1">
+                                            <option v-for="stok1 in stokGrupList1">{{stok1.grupKodu}}
+                                                ({{stok1.grupAdi}})
+                                            </option>
+                                        </datalist>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="row row-space" id="stok-kart-panel-3">
+                                <div class="input-group">
+                                    <label class="label">Durum</label>
+                                    <div class="rs-select2 js-select-simple select--no-search">
+                                        <select name="subject" id="stok-durum-id" class="input--style-4">
+                                            <option disabled="disabled" selected="selected">Seçiniz</option>
+                                            <option value="1">Aktif</option>
+                                            <option value="2">Pasif</option>
+                                        </select>
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-t-15" id="stokKartKayitForm">
+                                <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="row row-space" id="stokKartPanel2">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Barkod</label>
-                                <input class="input--style-4" type="text" name="barkod" id="barkod-id">
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Grup Kodu</label>
-                                <input id="grup-kodu-id" type="text" v-model="stokGrup1" list="stokGrupList1"
-                                       @change="getStokGrupList()" placeholder="Seçiniz">
-                                <datalist id="stokGrupList1">
-                                    <option v-for="stok1 in stokGrupList1">{{stok1.grupKodu}} ({{stok1.grupAdi}})
-                                    </option>
-                                </datalist>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-space" id="stok-kart-panel-3">
-                        <div class="input-group">
-                            <label class="label">Durum</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="subject" id="stok-durum-id" class="input--style-4">
-                                    <option disabled="disabled" selected="selected">Seçiniz</option>
-                                    <option value="1">Aktif</option>
-                                    <option value="2">Pasif</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-t-15" id="stokKartKayitForm">
-                        <button class="btn btn--radius-2 btn--blue" v-on:click="save()">Kaydet</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-    &nbsp;
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="container">
-                <div id="stokKartListele">
-                    <table>
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Stok Kodu</th>
-                            <th>Stok Adı</th>
-                            <th>Barkod</th>
-                            <th>Grup Kodu</th>
-                            <th>Durum</th>
-                            <th>Oluşturma Tarihi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="stok in stokKartList" :key="stok.id">
-                            <td>{{stok.stokKodu}}</td>
-                            <td>{{stok.stokAdi}}</td>
-                            <td>{{stok.barkod}}</td>
-                            <td>{{stok.grupKodu}}</td>
-                            <td>{{stok.durum==1?"Aktif":"Pasif"}}</td>
-                            <td>{{stok.olusturmaTarihi}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        <div class="col-6">
+            <div class="wrapper wrapper--w960">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Stok Kart Listesi</h2>
+                        <div class="row row-space">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div id="stokKartListele">
+                                        <table>
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th>Stok Kodu</th>
+                                                <th>Stok Adı</th>
+                                                <th>Barkod</th>
+                                                <th>Grup Kodu</th>
+                                                <th>Durum</th>
+                                                <th>Oluşturma Tarihi</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="stok in stokKartList" :key="stok.id">
+                                                <td>{{stok.stokKodu}}</td>
+                                                <td>{{stok.stokAdi}}</td>
+                                                <td>{{stok.barkod}}</td>
+                                                <td>{{stok.grupKodu}}</td>
+                                                <td>{{stok.durum==1?"Aktif":"Pasif"}}</td>
+                                                <td>{{stok.olusturmaTarihi}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -412,7 +483,7 @@
             <div class="wrapper wrapper--w680">
                 <div class="card card-4">
                     <div class="card-body">
-                        <h2 class="title">Belge Kayıt Formu</h2>
+                        <h2 class="title">Belge Kayıt</h2>
                         <div class="row row-space" id="belgeKayitForm1">
                             <div class="col-2">
                                 <div class="input-group">
@@ -436,7 +507,8 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Belge Tarih</label>
-                                    <input class="input--style-2" type="date" name="belge-tarih" id="b-belge-tarih-id">
+                                    <input class="input--style-2" type="date" name="belge-tarih"
+                                           id="b-belge-tarih-id">
                                 </div>
                             </div>
                             <div class="col-2" id="firma-no-div-id">
@@ -488,7 +560,7 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="belge in belgeList" :key="belge.id">
-                                     <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                     <td>{{belge.depoKodu}}</td>
                                     <td>{{belge.belgeNo}}</td>
                                     <td>{{belge.firmaNo}}</td>
@@ -514,7 +586,7 @@
             <div class="wrapper wrapper--w680">
                 <div class="card card-4">
                     <div class="card-body">
-                        <h2 class="title">Belge Detay Kayıt Formu</h2>
+                        <h2 class="title">Belge Detay Kayıt</h2>
                         <div class="row row-space" id="belgeDetayForm">
                             <div class="col-2">
                                 <div class="input-group">
@@ -548,7 +620,8 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Adet</label>
-                                    <input class="input--style-4" type="number" value="0" min="0" max="9999999" name="miktar" id="bd-miktar-id">
+                                    <input class="input--style-4" type="number" value="0" min="0" max="9999999"
+                                           name="miktar" id="bd-miktar-id">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -556,10 +629,11 @@
                                     <label class="label">Birim Fiyat</label>
                                     <div class="row">
                                         <div class="col-2">
-                                            <input class="input--style-4" type="text" value="0.0" name="birim-fiyat" id="bd-birim-fiyat-id">
+                                            <input class="input--style-4" type="text" value="0.0" name="birim-fiyat"
+                                                   id="bd-birim-fiyat-id">
                                         </div>
-                                         <div class="col-2">
-                                           <p class="input--style-4">TL</p>
+                                        <div class="col-2">
+                                            <p class="input--style-4">TL</p>
                                         </div>
                                     </div>
                                 </div>
@@ -606,43 +680,43 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="col-4">
-            <div class="wrapper wrapper--w680">
+            <div class="wrapper wrapper--w980">
                 <div class="card card-4">
                     <div class="card-body">
                         <h2 class="title">Belge Detay Listesi</h2>
                         <div class="row row-space" id="belgeDetayListele">
                             <div class="col-12">
                                 <div class="input-group">
-                            <table>
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th>Belge No</th>
-                                    <th>Stok Kodu</th>
-                                    <th>Barkod</th>
-                                    <th>Adet</th>
-                                    <th>Birim Tutar</th>
-                                    <th>Toplam Tutar</th>
-                                    <th>Oluşturma Tarihi</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="belgeDetay in belgeDetayList" :key="belgeDetay.id">
-                                    <td>{{belgeDetay.belgeNo}}</td>
-                                    <td>{{belgeDetay.stokKodu}}</td>
-                                    <td>{{belgeDetay.barkod}}</td>
-                                    <td>{{belgeDetay.adet}}</td>
-                                    <td>{{belgeDetay.birimTutar}}</td>
-                                    <td>{{belgeDetay.toplamTutar}}</td>
-                                    <td>{{belgeDetay.olusturmaTarihi}}</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                    <table>
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th>Belge No</th>
+                                            <th>Stok Kodu</th>
+                                            <th>Barkod</th>
+                                            <th>Adet</th>
+                                            <th>Birim Tutar</th>
+                                            <th>Toplam Tutar</th>
+                                            <th>Oluşturma Tarihi</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="belgeDetay in belgeDetayList" :key="belgeDetay.id">
+                                            <td>{{belgeDetay.belgeNo}}</td>
+                                            <td>{{belgeDetay.stokKodu}}</td>
+                                            <td>{{belgeDetay.barkod}}</td>
+                                            <td>{{belgeDetay.adet}}</td>
+                                            <td>{{belgeDetay.birimTutar}}</td>
+                                            <td>{{belgeDetay.toplamTutar}}</td>
+                                            <td>{{belgeDetay.olusturmaTarihi}}</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
             &nbsp;
