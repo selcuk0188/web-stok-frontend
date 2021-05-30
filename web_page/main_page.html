@@ -91,13 +91,13 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Ad</label>
-                                        <input class="input--style-4" type="text" name="first_name" id="first_name">
+                                        <input class="input--style-4" type="text" maxlength="40" nname="first_name" id="first_name">
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Soyad</label>
-                                        <input class="input--style-4" type="text" name="last_name" id="last_name">
+                                        <input class="input--style-4" type="text" maxlength="40" nname="last_name" id="last_name">
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">TCKN</label>
-                                        <input class="input--style-4" type="text" name="tckn" id="tckn">
+                                        <input class="input--style-4" type="text" maxlength="11" name="tckn" id="tckn">
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Kullanıcı Adı</label>
-                                        <input class="input--style-4" type="text" name="kullanici_adi"
+                                        <input class="input--style-4" type="text" maxlength="40" name="kullanici_adi"
                                                id="kullanici_adi">
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                     <div class="input-group">
                                         <label class="label">Şifre <i class="fa fa-eye" aria-hidden="true"
                                                                       onclick="showPass()"></i></label>
-                                        <input id="passId" class="input--style-4" type="password" name="pass">
+                                        <input id="passId" class="input--style-4" maxlength="30" type="password" name="pass">
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,6 @@
                                 <label class="label">Rol</label>
                                 <div class="rs-select2 js-select-simple select--no-search">
                                     <select name="subject" id="rol" class="input--style-4">
-                                        <option disabled="disabled" selected="selected">Seçiniz</option>
                                         <option value="1">Ana Depo Sorumlusu</option>
                                         <option value="2">Bölüm Sorumlusu</option>
                                         <option value="3">Admin</option>
@@ -208,13 +207,13 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Depo Adı</label>
-                                        <input class="input--style-4" type="text" name="depo-adi" id="depo-adi-id">
+                                        <input class="input--style-4" type="text"  maxlength="25" name="depo-adi" id="depo-adi-id">
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Depo Kodu</label>
-                                        <input class="input--style-4" type="text" name="depo-kodu" id="depo-kodu-id">
+                                        <input class="input--style-4" type="text" name="depo-kodu" id="depo-kodu-id" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==6) return false;" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +222,6 @@
                                     <label class="label">Durum</label>
                                     <div class="rs-select2 js-select-simple select--no-search">
                                         <select name="subject" id="depo-durum-id" class="input--style-4">
-                                            <option disabled="disabled" selected="selected">Seçiniz</option>
                                             <option value="1">Aktif</option>
                                             <option value="2">Pasif</option>
                                         </select>
@@ -387,13 +385,13 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Stok Kodu</label>
-                                        <input class="input--style-4" type="text" name="stok-kodu" id="stok-kodu-id">
+                                        <input class="input--style-4" type="text" name="stok-kodu" id="stok-kodu-id" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==9) return false;" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Stok Adı</label>
-                                        <input class="input--style-4" type="text" name="stok-adi" id="stok-adi-id">
+                                        <input class="input--style-4" type="text" name="stok-adi" id="stok-adi-id" maxlength="30">
                                     </div>
                                 </div>
                             </div>
@@ -401,7 +399,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Barkod</label>
-                                        <input class="input--style-4" type="text" name="barkod" id="barkod-id">
+                                        <input class="input--style-4" type="text" name="barkod" id="barkod-id" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==20) return false;" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -423,7 +421,6 @@
                                     <label class="label">Durum</label>
                                     <div class="rs-select2 js-select-simple select--no-search">
                                         <select name="subject" id="stok-durum-id" class="input--style-4">
-                                            <option disabled="disabled" selected="selected">Seçiniz</option>
                                             <option value="1">Aktif</option>
                                             <option value="2">Pasif</option>
                                         </select>
@@ -512,7 +509,9 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Belge No</label>
-                                    <input class="input--style-4" type="text" name="belge-no" id="b-belge-no-id">
+                                    <input class="input--style-4" type="text" minlength="1" maxlength="7" name="belge-no"
+                                           id="b-belge-no-id"
+                                           oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                 </div>
                             </div>
                         </div>
@@ -540,8 +539,8 @@
                             <div class="input-group" id="tur-div-id">
                                 <label class="label">Tür</label>
                                 <p id="belge-giris-p-id"></p>
-                                <select name="subject" id="belge-tur-id" class="input--style-4" onchange="girisClick()">
-                                    <option disabled="disabled" selected="selected">Seçiniz</option>
+                                <select name="subject" id="belge-tur-id" class="input--style-4"
+                                        onchange="girisClick()">
                                     <option value="1">Giriş</option>
                                     <option value="2">Çıkış</option>
                                 </select>
@@ -602,7 +601,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Adet</label>
-                                    <input class="input--style-4" type="number" value="0" min="0" max="9999999"
+                                    <input class="input--style-4" type="number" minlength="1" placeholder="1" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==6) return false;"  min="1" max="999999"
                                            name="miktar" id="bd-miktar-id">
                                 </div>
                             </div>
@@ -611,7 +610,8 @@
                                     <label class="label">Birim Fiyat</label>
                                     <div class="row">
                                         <div class="col-2">
-                                            <input class="input--style-4" type="text" value="0.0" name="birim-fiyat"
+                                            <input class="input--style-4" type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==12) return false;" name="birim-fiyat" name="amount"
+                                                   step="any" placeholder="1.00" min="0.00"
                                                    id="bd-birim-fiyat-id">
                                         </div>
                                         <div class="col-2">

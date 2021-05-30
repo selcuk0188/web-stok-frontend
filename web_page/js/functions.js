@@ -1,18 +1,22 @@
-open('tag-1');
-let navbar = document
-    .getElementById("cssmenu")
-    .querySelectorAll('li');
-navbar[0].className += " active";
+open_tag_1();
+loadPageFirst(0);
 
-for (var i = 0; i < navbar.length; i++) {
-    navbar[i].addEventListener("click", function () {
-        var current = document.getElementsByClassName("active");
-        if (current.length > 0) {
-            current[0].className = current[0].className.replace(" active", "");
-        }
-        this.className += " active";
-    });
+function loadPageFirst(ind) {
+    let navbar = document
+        .getElementById("cssmenu")
+        .querySelectorAll('li');
+    navbar[ind].className += " active";
+    for (var i = 0; i < navbar.length; i++) {
+        navbar[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            if (current.length > 0) {
+                current[0].className = current[0].className.replace(" active", "");
+            }
+            this.className += " active";
+        });
+    }
 }
+
 var userId = getParameterByName('kullaniciId');
 var depoStokGlobal = [];
 document.getElementById("bd-barkod-id").readOnly = true;
@@ -246,6 +250,31 @@ function convertHistory(hist) {
     return hist;
 }
 
+//------------------validate input functions------------------------//
+
+function validateKullaniciInput() {
+    var ad = document.getElementById("first_name").value;
+    var soyad = document.getElementById("last_name").value;
+    var tckn = document.getElementById("tckn").value;
+    var kullaniciAdi = document.getElementById("kullanici_adi").value;
+    var sifre = document.getElementById("passId").value;
+    var rol = document.getElementById("rol").value;
+    if (!ad.match(/^[a-zA-ZğüşöçıİĞÜŞÖÇ]+$/) || !soyad.match(/^[a-zA-ZğüşöçıİĞÜŞÖÇ]+$/)) {
+        alert("Ad ve Soyad özel karakter ve rakam içeremez!")
+        return false;
+    } else if (!tckn.match(/^[0-9]+$/)) {
+        alert("TC No sadece rakamlardan oluşmalıdır! ")
+        return false;
+    } else if (tckn.length != 11) {
+        alert("TC No 11 Haneli olmalıdır! ")
+        return false;
+    }
+    return true;
+}
+
+
+//-----------------------------------------------------------------//
+
 //var url = "http://localhost:8081/stok-yonetim";
 var url = "http://ec2-18-156-136-177.eu-central-1.compute.amazonaws.com:8081/stok-yonetim";
 
@@ -256,9 +285,9 @@ new Vue({
     },
     methods: {
         save: function () {
-            if (document.getElementById("first_name").value == null || document.getElementById("last_name").value == null ||
-                document.getElementById("tckn").value == null || document.getElementById("kullanici_adi").value == null ||
-                document.getElementById("passId").value == null || document.getElementById("rol").value == null) {
+            if (document.getElementById("first_name").value == "" || document.getElementById("last_name").value == "" ||
+                document.getElementById("tckn").value == "" || document.getElementById("kullanici_adi").value == "" ||
+                document.getElementById("passId").value == "" || document.getElementById("rol").value == "") {
                 alert("Herhangi bir alan Boş olamaz!!!");
             } else {
                 var ad = document.getElementById("first_name").value;
@@ -267,22 +296,28 @@ new Vue({
                 var kullaniciAdi = document.getElementById("kullanici_adi").value;
                 var sifre = document.getElementById("passId").value;
                 var rol = document.getElementById("rol").value;
-                axios
-                    .post(url + '/kullanici/kayit', {
-                        adSoyad: ad + " " + soyad,
-                        tcNo: tckn,
-                        kullaniciAdi: kullaniciAdi,
-                        sifre: sifre,
-                        durum: 1,
-                        rolId: Number(rol)
-                    })
-                    .then(response => {
-                        alert("Kayıt Başarıyla Kaydedilmiştir.");
-                    })
-                    .catch(function (error) {
-                        console.log("hata alindi");
-                    })
+                if (validateKullaniciInput()) {
+                    axios
+                        .post(url + '/kullanici/kayit', {
+                            adSoyad: ad + " " + soyad,
+                            tcNo: tckn,
+                            kullaniciAdi: kullaniciAdi,
+                            sifre: sifre,
+                            durum: 1,
+                            rolId: Number(rol)
+                        })
+                        .then(response => {
+                            if (response.data.basariliMi == true)
+                                alert("Kayıt Başarıyla Kaydedilmiştir.");
+                            else
+                                alert("Kullanıcı Adı veya TcNo mevcuttur. Lütfen olmayan bir kayıt ekleyiniz !");
+                        })
+                        .catch(function (error) {
+                            console.log("hata alindi");
+                        })
+                }
             }
+            return true;
         }
     }
 })
@@ -366,9 +401,9 @@ new Vue({
     },
     methods: {
         save: function () {
-            if (document.getElementById("depo-adi-id").value == null ||
-                document.getElementById("depo-kodu-id").value == null ||
-                document.getElementById("depo-durum-id").value == null) {
+            if (document.getElementById("depo-adi-id").value == "" ||
+                document.getElementById("depo-kodu-id").value == "" ||
+                document.getElementById("depo-durum-id").value == "") {
                 alert("Herhangi bir alan Boş olamaz!!!");
             } else {
                 var depoAdi = document.getElementById("depo-adi-id").value;
@@ -381,11 +416,15 @@ new Vue({
                         depoDurum: parseInt(depoDurum) //aktif
                     })
                     .then(response => {
-                        alert("Kayıt Başarıyla Kaydedilmiştir.");
+                        if (response.data.basariliMi == true)
+                            alert("Kayıt Başarıyla Kaydedilmiştir.");
+                        else
+                            alert("Depo Kodu mevcuttur. Lütfen olmayan bir kayıt ekleyiniz !");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
                     })
+                location.reload();
             }
         }
     }
@@ -400,16 +439,19 @@ new Vue({
         }
     },
     mounted: function () {
-        axios
-            .post(url + '/depo/listele?durum=-1')
-            .then(response => {
-                this.depoList = response.data.depoList;
-            })
-            .catch(function (error) {
-                console.log("hata alindi");
-            })
+        this.list();
     },
     methods: {
+        list: function () {
+            axios
+                .post(url + '/depo/listele?durum=-1')
+                .then(response => {
+                    this.depoList = response.data.depoList;
+                })
+                .catch(function (error) {
+                    console.log("hata alindi");
+                })
+        },
         depoSil: function (depoId) {
             axios
                 .post(url + '/depo/sil?depoId=' + depoId)
@@ -419,9 +461,6 @@ new Vue({
                 .catch(function (error) {
                     console.log(error);
                 })
-        },
-        convertHistory: function (hist) {
-            convertHistory(hist);
         }
 
     }
@@ -448,7 +487,10 @@ new Vue({
                         depoKodu: s_depoKodu
                     })
                     .then(response => {
-                        alert("Kayıt Başarıyla Kaydedilmiştir.");
+                        if (response.data.basariliMi == true)
+                            alert("Kayıt Başarıyla Kaydedilmiştir.");
+                        else
+                            alert("Depo Kodu ve Kullanıcı Id tanımı mevcuttur. Lütfen olmayan bir kayıt ekleyiniz !");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
@@ -534,11 +576,11 @@ new Vue({
     },
     methods: {
         save: function () {
-            if (document.getElementById("stok-kodu-id").value == null ||
-                document.getElementById("stok-adi-id").value == null ||
-                document.getElementById("barkod-id").value == null ||
-                document.getElementById("grup-kodu-id").value == null ||
-                document.getElementById("stok-durum-id").value == null
+            if (document.getElementById("stok-kodu-id").value == "" ||
+                document.getElementById("stok-adi-id").value == "" ||
+                document.getElementById("barkod-id").value == "" ||
+                document.getElementById("grup-kodu-id").value == "" ||
+                document.getElementById("stok-durum-id").value == ""
             ) {
                 alert("Herhangi bir alan Boş olamaz!!!");
             } else {
@@ -557,11 +599,15 @@ new Vue({
                         durum: Number(stokDurum)
                     })
                     .then(response => {
-                        alert("Kayıt Başarıyla Kaydedilmiştir.");
+                        if (response.data.basariliMi == true)
+                            alert("Kayıt Başarıyla Kaydedilmiştir.");
+                        else
+                            alert("Stok Kodu mevcuttur. Lütfen olmayan bir kayıt ekleyiniz !");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
                     })
+                location.reload();
             }
         }
     }
@@ -635,9 +681,9 @@ new Vue({
     },
     methods: {
         save: function () {
-            if (document.getElementById("b-depo-kodu-id").value == null ||
-                document.getElementById("b-belge-no-id").value == null ||
-                document.getElementById("b-belge-tarih-id").value == null
+            if (document.getElementById("b-depo-kodu-id").value == "" ||
+                document.getElementById("b-belge-no-id").value == "" ||
+                document.getElementById("b-belge-tarih-id").value == ""
             ) {
                 alert("Herhangi bir alan Boş olamaz!!!");
             } else {
@@ -663,7 +709,10 @@ new Vue({
                         tur: Number(belgeTur)
                     })
                     .then(response => {
-                        alert("Kayıt Başarıyla Kaydedilmiştir.");
+                        if (response.data.basariliMi == true)
+                            alert("Kayıt Başarıyla Kaydedilmiştir.");
+                        else
+                            alert("Belge No mevcuttur. Lütfen olmayan bir kayıt ekleyiniz !");
                     })
                     .catch(function (error) {
                         console.log("hata alindi");
